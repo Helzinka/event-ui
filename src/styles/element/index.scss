@@ -1,0 +1,46 @@
+$--colors: (
+  'primary': (
+    'base': green,
+  ),
+  'success': (
+    'base': #21ba45,
+  ),
+  'warning': (
+    'base': #f2711c,
+  ),
+  'danger': (
+    'base': #db2828,
+  ),
+  'error': (
+    'base': #db2828,
+  ),
+  'info': (
+    'base': #42b8dd,
+  ),
+);
+
+// we can add this to custom namespace, default is 'el'
+@forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
+  $namespace: 'ep'
+);
+
+// You should use them in scss, because we calculate it by sass.
+// comment next lines to use default color
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  // do not use same name, it will override.
+  $font-family:
+    (
+      '': // Japanese and Korean Fix
+      "'Helvetica Neue', Helvetica, 'Yu Gothic Medium', '游ゴシック Medium', YuGothic, '游ゴシック体', 'ヒラギノ角ゴ Pro W3', 'メイリオ', 'SF Pro KR', 'HY Gulim', Gulim, 'Nanum Gothic', 'Malgun Gothic', 'MalgunGothic', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif"
+    ),
+  $colors: $--colors,
+);
+
+// if you want to import all
+// @use "element-plus/theme-chalk/src/index.scss" as *;
+
+// You can comment it to hide debug info.
+// @debug $--colors;
+
+// custom dark variables
+@use './dark.scss';
