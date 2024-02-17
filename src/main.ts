@@ -1,6 +1,3 @@
-/**
- * Vue3 Main script
- */
 import store from '@/store';
 import { createApp } from 'vue';
 

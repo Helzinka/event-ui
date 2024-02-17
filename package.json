@@ -10,7 +10,7 @@
   },
   "packageManager": "pnpm@8.14.0",
   "scripts": {
-    "dev": "vite --mode development",
+    "dev": "vite",
     "clean": "rimraf ./node_modules/.vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "build:analyze": "vite build --mode analyze",
@@ -32,7 +32,8 @@
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@iconify-json/ep": "^1.1.14",

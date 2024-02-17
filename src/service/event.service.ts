@@ -1,12 +1,11 @@
-import axios from 'axios';
+import { instanceAxios } from './index';
 
-import { instanceAxios } from '.';
+import type { EventsPartialWithRelationsSchema } from '@/interfaces/event.interface';
 
 export async function getEvent() {
-  const data = await instanceAxios.post(
-    'http://localhost:3000/api/event/find',
+  const data = await instanceAxios.post<EventsPartialWithRelationsSchema>(
+    'event/find',
     {}
   );
-  console.log(data);
-  // return res;
+  return data;
 }
