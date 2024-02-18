@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-import { ElMessage } from 'element-plus';
+import { ElNotification } from 'element-plus';
 
 import type { User } from '@/interfaces/login.interface';
 
@@ -34,9 +34,10 @@ export const useLoginStore = defineStore('login', {
       } else {
         this.user = data;
         this.isConnected = true;
-        ElMessage.success({
+        ElNotification({
+          title: 'Connection',
           message: `Bienvenue ${data.name}`,
-          type: 'succes',
+          type: 'success',
         });
         this.router.push({ name: 'reporting' });
       }

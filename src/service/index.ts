@@ -1,7 +1,10 @@
+import { useLoginStore } from '@/store';
+
 import axios from 'axios';
 
 const serverURL = import.meta.env.VITE_SERVER_URL;
 
+// [Base axios config]
 export const instanceAxios = axios.create({
   baseURL: serverURL,
   headers: {
@@ -11,4 +14,11 @@ export const instanceAxios = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
+});
+
+// [Middleware interceptor]
+instanceAxios.interceptors.request.use(config => {
+  const loginStore = useLoginStore();
+  config.headers.Authorization = `Bearer ${loginStore.user.token}`;
+  return config;
 });
