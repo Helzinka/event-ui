@@ -1,8 +1,6 @@
 <template>
   <el-menu mode="horizontal" :ellipsis="false" router class="items-center">
-    <el-menu-item class="text-lg font-bold" index="1" :route="{ name: 'home' }">
-      Aviso Event
-    </el-menu-item>
+    <el-menu-item class="text-lg font-bold" index="1">Aviso Event</el-menu-item>
     <el-menu-item index="2" :route="{ name: 'about' }">About</el-menu-item>
     <el-menu-item h="full" @click="toggleDark()">
       <button

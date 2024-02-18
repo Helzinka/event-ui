@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { useRouter } from 'vue-router';
 
 import { ElMessage } from 'element-plus';
 
@@ -22,6 +21,9 @@ export const useLoginStore = defineStore('login', {
     showName: state => {
       return state.user.name;
     },
+    showIsConnected: state => {
+      return state.isConnected;
+    },
   },
   actions: {
     async connect(email: string, password: string) {
@@ -38,6 +40,14 @@ export const useLoginStore = defineStore('login', {
         });
         this.router.push({ name: 'reporting' });
       }
+    },
+    // ONLY DEV
+    async autoConnect() {
+      const email = import.meta.env.VITE_ADMIN_EMAIL;
+      const password = import.meta.env.VITE_ADMIN_PASSWORD;
+      const data = await client.connect(email, password);
+      this.isConnected = true;
+      this.user = data;
     },
   },
 });

@@ -9,13 +9,11 @@
       </el-aside>
       <div class="grow-1">
         <el-main class="h-full">
-          <el-scrollbar>
-            <router-view v-slot="{ Component, route }">
-              <transition name="el-fade-in-linear">
-                <component :is="Component" :key="route.path" />
-              </transition>
-            </router-view>
-          </el-scrollbar>
+          <router-view v-slot="{ Component, route }">
+            <transition name="el-fade-in-linear">
+              <component :is="Component" :key="route.path" />
+            </transition>
+          </router-view>
         </el-main>
       </div>
     </div>

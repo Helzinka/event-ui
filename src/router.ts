@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
+import { useLoginStore } from './store';
+
 import EventView from '@/views/EventView.vue';
 import LoginView from '@/views/LoginView.vue';
 import NotFound from '@/views/NotFoundView.vue';
@@ -39,6 +41,15 @@ const router = createRouter({
     },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
   ],
+});
+
+// route guard global
+router.beforeEach(async (to, from, next) => {
+  const loginStore = useLoginStore();
+  if (!loginStore.showIsConnected) {
+    await loginStore.autoConnect();
+    next();
+  } else next();
 });
 
 export default router;
