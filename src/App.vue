@@ -8,15 +8,15 @@
         <base-side />
       </el-aside>
       <div class="grow-1">
-        <el-scrollbar>
-          <el-main>
+        <el-main class="h-full">
+          <el-scrollbar>
             <router-view v-slot="{ Component, route }">
               <transition name="el-fade-in-linear">
                 <component :is="Component" :key="route.path" />
               </transition>
             </router-view>
-          </el-main>
-        </el-scrollbar>
+          </el-scrollbar>
+        </el-main>
       </div>
     </div>
   </el-config-provider>

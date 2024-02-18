@@ -1,11 +1,8 @@
 import { instanceAxios } from './index';
 
-import type { EventsPartialWithRelationsSchema } from '@/interfaces/event.interface';
+import type { Events, EventFind } from '@/interfaces/event.interface';
 
-export async function getEvent() {
-  const data = await instanceAxios.post<EventsPartialWithRelationsSchema>(
-    'event/find',
-    {}
-  );
+export async function getEvents(options: EventFind) {
+  const { data } = await instanceAxios.post<Events>('event/find', options);
   return data;
 }

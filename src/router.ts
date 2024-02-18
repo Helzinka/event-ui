@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import EventView from '@/views/EventView.vue';
-import HomeView from '@/views/HomeView.vue';
+import LoginView from '@/views/LoginView.vue';
 import NotFound from '@/views/NotFoundView.vue';
 import ParameterView from '@/views/ParameterView.vue';
 import ReportingView from '@/views/ReportingView.vue';
@@ -9,11 +9,6 @@ import ReportingView from '@/views/ReportingView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
     {
       path: '/reporting',
       name: 'reporting',
@@ -28,6 +23,11 @@ const router = createRouter({
       path: '/parameter',
       name: 'parameter',
       component: ParameterView,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
     },
     {
       path: '/about',
