@@ -3,24 +3,34 @@
     <!-- <h1>Evènements</h1>
     <el-divider /> -->
     <!-- actions event -->
+    <el-breadcrumb :separator-icon="ArrowRight" class="mb-4">
+      <el-breadcrumb-item :to="{ path: '/events' }">
+        Evènement
+      </el-breadcrumb-item>
+    </el-breadcrumb>
     <div class="mb-6 flex justify-items-center gap-4">
       <el-input
         v-model="search"
         style="width: 200px"
         placeholder="rechercher un évènement"
       />
-      <el-button type="primary" plain>Créer un évènement</el-button>
+      <EventCreate />
     </div>
   </div>
   <!-- card event -->
-  <el-row :gutter="20">
+  <el-row v-loading="eventStore.loading.event" :gutter="20">
     <el-col
       v-for="event in eventStore.filterEventByName(search)"
       :key="event.id"
       class="mb-4"
       :span="12"
     >
-      <EventCard :title="event.title" :description="event.description" />
+      <EventCard
+        :title="event.title"
+        :description="event.description"
+        :start="dayjs(event.start)"
+        :end="dayjs(event.end)"
+      />
     </el-col>
   </el-row>
 </template>
@@ -29,9 +39,12 @@
 import { useEventStore } from '@/store';
 import { onMounted, type Ref, ref } from 'vue';
 
-import EventCard from '@/components/EventCard';
-const eventStore = useEventStore();
+import { ArrowRight } from '@element-plus/icons-vue';
+import dayjs from 'dayjs';
 
+import EventCard from '@/components/EventCard';
+import EventCreate from '@/components/EventCreate';
+const eventStore = useEventStore();
 const search: Ref<string> = ref('');
 
 onMounted(async () => {

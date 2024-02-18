@@ -1,11 +1,16 @@
 import { defineStore } from 'pinia';
 
-import type { Events } from '@/interfaces/event.interface';
+import { ElMessage } from 'element-plus';
+
+import type { Events, EventCreate } from '@/interfaces/event.interface';
 
 import * as client from '@/service/event.service';
 
 const eventState = {
   events: [] as Events,
+  loading: {
+    event: false,
+  },
 };
 
 /** Event Store */
@@ -22,7 +27,19 @@ export const useEventStore = defineStore('event', {
   },
   actions: {
     async findEvents() {
+      this.loading.event = true;
       this.events = await client.getEvents({});
+      this.loading.event = false;
+    },
+    async createEvent(options: EventCreate) {
+      const data = await client.createEvent(options);
+      if (data) {
+        this.events.push(data);
+        ElMessage({
+          message: `Evènement ${data.title} bien créé`,
+          type: 'success',
+        });
+      }
     },
   },
 });
