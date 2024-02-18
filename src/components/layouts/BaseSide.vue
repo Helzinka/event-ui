@@ -1,12 +1,3 @@
-<script lang="ts" setup>
-import { ref, type Ref } from 'vue';
-
-import { Calendar, Setting, PieChart } from '@element-plus/icons-vue';
-
-const isCollapsed: Ref<boolean> = ref(false);
-const full: Ref<boolean> = ref(false);
-</script>
-
 <template>
   <el-menu
     :collapse="isCollapsed"
@@ -29,3 +20,11 @@ const full: Ref<boolean> = ref(false);
     </el-menu-item>
   </el-menu>
 </template>
+<script lang="ts" setup>
+import { ref, type Ref } from 'vue';
+
+import { Calendar, Setting, PieChart } from '@element-plus/icons-vue';
+
+const isCollapsed: Ref<boolean> = ref(false);
+const full: Ref<boolean> = ref(false);
+</script>
