@@ -6,9 +6,9 @@
   <el-dialog
     v-model="dialogFormVisible"
     title="Création d'un évènement"
-    width="500"
+    width="600px"
   >
-    <el-form :model="form" label-position="left">
+    <el-form :model="form" label-position="right" label-width="120px">
       <el-form-item label="Nom">
         <el-input v-model="form.title" placeholder="Nom de l'évènement" />
       </el-form-item>

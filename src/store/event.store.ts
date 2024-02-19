@@ -36,7 +36,17 @@ export const useEventStore = defineStore('event', {
       if (data) {
         this.events.push(data);
         ElMessage({
-          message: `Evènement ${data.title} bien créé`,
+          message: `Evènement ${data.title} a été créé`,
+          type: 'success',
+        });
+      }
+    },
+    async deleteEvent(options: any) {
+      const data = await client.createEvent(options);
+      if (data) {
+        this.events.push(data);
+        ElMessage({
+          message: `Evènement ${data.title} a été supprimé`,
           type: 'success',
         });
       }

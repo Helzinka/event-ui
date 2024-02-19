@@ -2,8 +2,10 @@
   <!-- <h1>Evènements</h1>
     <el-divider /> -->
   <!-- actions event -->
-  <el-breadcrumb :separator-icon="ArrowRight" class="mb-4">
-    <el-breadcrumb-item :to="{ path: '/events' }">Evènement</el-breadcrumb-item>
+  <el-breadcrumb :separator-icon="ArrowRight">
+    <el-breadcrumb-item :to="{ path: '/events' }">
+      <h3>Evènements</h3>
+    </el-breadcrumb-item>
   </el-breadcrumb>
   <div class="mb-6 flex justify-items-center gap-4">
     <el-input

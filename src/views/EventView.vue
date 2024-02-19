@@ -1,7 +1,11 @@
 <template>
-  <el-breadcrumb :separator-icon="ArrowRight" class="mb-4">
-    <el-breadcrumb-item :to="{ path: '/events' }">Evènement</el-breadcrumb-item>
-    <el-breadcrumb-item>{{ activityStore.event.title }}</el-breadcrumb-item>
+  <el-breadcrumb :separator-icon="ArrowRight">
+    <el-breadcrumb-item :to="{ path: '/events' }">
+      <h3>Evènements</h3>
+    </el-breadcrumb-item>
+    <el-breadcrumb-item>
+      <h3>{{ activityStore.event.title }}</h3>
+    </el-breadcrumb-item>
   </el-breadcrumb>
   <div class="mb-6 flex justify-items-center gap-4">
     <el-input
@@ -13,17 +17,20 @@
   </div>
   <el-row :gutter="20">
     <el-col
-      v-for="event in activityStore.filterEventByName(search)"
-      :key="event.id"
+      v-for="activity in activityStore.filterActivityByName(search)"
+      :key="activity.id"
       class="mb-4"
       :span="12"
     >
       <ActivityCard
-        :id="event.id"
-        :title="event.title"
-        :description="event.description"
-        :start="dayjs(event.start)"
-        :end="dayjs(event.end)"
+        :id="activity.id"
+        :title="activity.title"
+        :description="activity.description"
+        :ticket-max="activity.ticketMax"
+        :ticket-buy="activity.ticketBuy"
+        :category="activity.category"
+        :start="dayjs(activity.start)"
+        :end="dayjs(activity.end)"
       />
     </el-col>
   </el-row>
@@ -42,10 +49,9 @@ const search: Ref<string> = ref('');
 
 onMounted(async () => {
   const route = useRoute();
-  console.log(route.params);
   await activityStore.findActivitiesFromEvent({
     where: { id: route.params.eventId },
-    include: { activity: true },
+    include: { activity: { include: { category: true } } },
   });
 });
 </script>

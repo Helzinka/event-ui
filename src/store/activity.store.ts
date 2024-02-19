@@ -26,9 +26,27 @@ export const useActivityStore = defineStore('activity', {
     showEvents: state => {
       return state.activies;
     },
-    filterEventByName: state => {
+    filterActivityByName: state => {
       return (title: string) =>
         state.activies.filter(item => item.title?.includes(title));
+    },
+    showCategories: state => {
+      // replace with bdd
+      const categories: string[] = [];
+
+      for (const item of state.activies) {
+        if (item.category) {
+          for (const item2 of item.category) {
+            if (item2.name && categories.length <= 0 && item2.name) {
+              categories.push(item2.name);
+            }
+            if (item2.name && !categories.includes(item2.name)) {
+              categories.push(item2.name);
+            }
+          }
+        }
+      }
+      return categories;
     },
   },
   actions: {
@@ -38,8 +56,8 @@ export const useActivityStore = defineStore('activity', {
       this.activies = activity;
       this.event = event;
     },
-    async createActivity(options: ActityCreate) {
-      const data = await client.createActivity(options);
+    async createActivity(option: ActityCreate) {
+      const data = await client.createActivity(option);
       if (data) {
         this.activies.push(data);
         ElMessage({
