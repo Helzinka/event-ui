@@ -1,19 +1,19 @@
 <template>
   <el-button type="primary" plain @click="dialogFormVisible = true">
     <el-icon class="mr-2"><CirclePlusFilled /></el-icon>
-    Créer un évènement
+    Créer une activitée
   </el-button>
   <el-dialog
     v-model="dialogFormVisible"
-    title="Création d'un évènement"
+    title="Création d'une activitée"
     width="500"
   >
     <el-form :model="form" label-position="left">
       <el-form-item label="Nom">
-        <el-input v-model="form.title" placeholder="Nom de l'évènement" />
+        <el-input v-model="form.title" placeholder="Nom de l'activitée" />
       </el-form-item>
       <el-form-item label="Lieu">
-        <el-input v-model="form.location" placeholder="Lieu de l'évènement" />
+        <el-input v-model="form.location" placeholder="Lieu de l'activitée" />
       </el-form-item>
       <el-form-item label="Description">
         <el-input

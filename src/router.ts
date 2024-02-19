@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import { useLoginStore } from './store';
 
+import ActivityView from '@/views/ActivityView.vue';
 import EventView from '@/views/EventView.vue';
+import EventsView from '@/views/EventsView.vue';
 import LoginView from '@/views/LoginView.vue';
 import NotFound from '@/views/NotFoundView.vue';
 import ParameterView from '@/views/ParameterView.vue';
@@ -19,7 +21,17 @@ const router = createRouter({
     {
       path: '/events',
       name: 'events',
+      component: EventsView,
+    },
+    {
+      path: '/event/:eventId/',
+      name: 'eventByid',
       component: EventView,
+    },
+    {
+      path: '/event/:eventId/activty/:activityId',
+      name: 'activityById',
+      component: ActivityView,
     },
     {
       path: '/parameter',

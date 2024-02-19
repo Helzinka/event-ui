@@ -41,6 +41,7 @@ const props = defineProps<{
   id?: number;
   title?: string;
   description?: string;
+  ticketMax?: number;
   start: Dayjs;
   end: Dayjs;
 }>();
@@ -56,6 +57,9 @@ const status = computed(() => {
 });
 
 async function goToActivity() {
-  await router.push({ name: 'eventByid', params: { eventId: props.id } });
+  await router.push({
+    name: 'activityById',
+    params: { eventId: 3, activityId: 1 },
+  });
 }
 </script>

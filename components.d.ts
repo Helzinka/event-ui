@@ -7,6 +7,9 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ActivityCard: typeof import('./src/components/ActivityCard.vue')['default']
+    ActivityCreate: typeof import('./src/components/ActivityCreate.vue')['default']
+    ActivityCreateActitit: typeof import('./src/components/ActivityCreateActitit.vue')['default']
     BaseHeader: typeof import('./src/components/layouts/BaseHeader.vue')['default']
     BaseSide: typeof import('./src/components/layouts/BaseSide.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
@@ -14,6 +17,7 @@ declare module 'vue' {
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElBtn: typeof import('element-plus/es')['ElBtn']
+    ElButon: typeof import('element-plus/es')['ElButon']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
