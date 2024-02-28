@@ -9,6 +9,7 @@ import { useActivityStore } from '@/store/activity.store';
 import { useEventStore } from '@/store/event.store';
 import { useLoginStore } from '@/store/login.store';
 import { useReportingStore } from '@/store/reporting.store';
+import { useParameterStore } from '@/store/parameter.store';
 
 /** Pinia Store */
 const pinia: Pinia = createPinia();
@@ -19,4 +20,10 @@ pinia.use(piniaPluginPersistedstate);
 
 export default pinia;
 
-export { useEventStore, useReportingStore, useLoginStore, useActivityStore };
+export {
+  useEventStore,
+  useReportingStore,
+  useLoginStore,
+  useActivityStore,
+  useParameterStore,
+};

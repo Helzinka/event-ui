@@ -43,14 +43,6 @@ const router = createRouter({
       name: 'login',
       component: LoginView,
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: async () => await import('@/views/AboutView.vue'),
-    },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
   ],
 });
@@ -61,8 +53,13 @@ router.beforeEach(async (to, from, next) => {
   const loginStore = useLoginStore();
   if (!loginStore.showIsConnected) {
     await loginStore.autoConnect();
-    next('/events');
+    next('/parameter');
   } else next();
 });
 
 export default router;
+
+// route level code-splitting
+// this generates a separate chunk (About.[hash].js) for this route
+// which is lazy-loaded when the route is visited.
+// component: async () => await import('@/views/AboutView.vue'),
