@@ -1,7 +1,7 @@
 <template>
   <el-menu mode="horizontal" :ellipsis="false" router class="items-center">
     <el-menu-item class="text-lg font-bold" index="1">Aviso Event</el-menu-item>
-    <el-menu-item index="2" :route="{ name: 'about' }">About</el-menu-item>
+    <div class="grow" />
     <el-menu-item h="full" @click="toggleDark()">
       <button
         class="w-full cursor-pointer border-none bg-transparent"
@@ -10,8 +10,7 @@
         <i inline-flex i="dark:ep-moon ep-sunny" />
       </button>
     </el-menu-item>
-    <div class="grow" />
-    <div>
+    <div class="ml-2">
       <span class="mr-4">{{ login.user.name }}</span>
       <el-button
         :type="isConnectedButtonColor"
