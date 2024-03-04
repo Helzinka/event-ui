@@ -13,9 +13,19 @@
     <el-table-column class="flex" fixed="right" label="Operations" width="160">
       <template #default="scope">
         <el-button type="primary" size="small">Editer</el-button>
-        <el-button type="danger" size="small" @click="deleteUser(scope.row.id)">
-          Supprimer
-        </el-button>
+        <el-popconfirm
+          width="300"
+          confirm-button-text="Oui"
+          cancel-button-text="Non"
+          :icon="InfoFilled"
+          icon-color="#626AEF"
+          title="Etes vous sur de vouloir supprimer cette utilisateur "
+          @confirm="deleteUser(scope.row.id)"
+        >
+          <template #reference>
+            <el-button type="danger" size="small">Supprimer</el-button>
+          </template>
+        </el-popconfirm>
       </template>
     </el-table-column>
   </el-table>
@@ -24,6 +34,7 @@
 <script setup lang="ts">
 import { useParameterStore } from '@/store';
 import { onMounted } from 'vue';
+import { InfoFilled } from '@element-plus/icons-vue';
 
 const parameterStore = useParameterStore();
 
