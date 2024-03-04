@@ -8,11 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { useParameterStore } from '@/store';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 const activeName = ref('first');
-const parameterStore = useParameterStore();
-
-onMounted(() => parameterStore.findUsers({}));
 </script>

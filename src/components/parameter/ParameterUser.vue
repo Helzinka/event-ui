@@ -13,7 +13,9 @@
     <el-table-column class="flex" fixed="right" label="Operations" width="160">
       <template #default="scope">
         <el-button type="primary" size="small">Editer</el-button>
-        <el-button type="danger" size="small">Supprimer</el-button>
+        <el-button type="danger" size="small" @click="deleteUser(scope.row.id)">
+          Supprimer
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -21,8 +23,15 @@
 
 <script setup lang="ts">
 import { useParameterStore } from '@/store';
+import { onMounted } from 'vue';
 
 const parameterStore = useParameterStore();
+
+onMounted(() => parameterStore.findUsers({}));
+
+async function deleteUser(id: number) {
+  parameterStore.deleteUser({ where: { id } });
+}
 </script>
 
 <style>
