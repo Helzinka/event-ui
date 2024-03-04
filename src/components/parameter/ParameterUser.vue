@@ -7,28 +7,75 @@
     <el-table-column
       v-for="(item, i) in parameterStore.getColumns"
       :prop="item"
-      :label="item.toUpperCase()"
+      :label="item"
       :keys="i"
-    />
-    <el-table-column class="flex" fixed="right" label="Operations" width="160">
+      :sortable="
+        item == 'email' || item == 'name' || item == 'lastname' ? true : false
+      "
+    >
       <template #default="scope">
-        <el-button type="primary" size="small">Editer</el-button>
-        <el-popconfirm
-          width="300"
-          confirm-button-text="Oui"
-          cancel-button-text="Non"
-          :icon="InfoFilled"
-          icon-color="#626AEF"
-          title="Etes vous sur de vouloir supprimer cette utilisateur "
-          @confirm="deleteUser(scope.row.id)"
+        <div
+          v-if="
+            parameterStore.edit && parameterStore.editingUser.id == scope.row.id
+          "
         >
-          <template #reference>
-            <el-button type="danger" size="small">Supprimer</el-button>
-          </template>
-        </el-popconfirm>
+          <el-input
+            class="pr-6"
+            v-if="item !== 'id'"
+            v-model="parameterStore.editingUser[item]"
+          ></el-input>
+          <div class="pr-6" v-else>{{ scope.row[item] }}</div>
+        </div>
+      </template>
+    </el-table-column>
+    <el-table-column class="flex" fixed="right" label="actions" width="160">
+      <template #default="scope">
+        <div
+          v-if="
+            parameterStore.edit && parameterStore.editingUser.id == scope.row.id
+          "
+        >
+          <el-button link type="primary" size="small" @click="saveUser()">
+            sauvegarder
+          </el-button>
+          <el-button
+            link
+            type="danger"
+            size="small"
+            @click="parameterStore.edit = false"
+          >
+            annuler
+          </el-button>
+        </div>
+        <div v-else>
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="editUser(scope.row.id)"
+          >
+            editer
+          </el-button>
+          <el-popconfirm
+            width="300"
+            confirm-button-text="Oui"
+            cancel-button-text="Non"
+            :icon="InfoFilled"
+            icon-color="#626AEF"
+            title="Etes vous sur de vouloir supprimer cette utilisateur "
+            @confirm="deleteUser(scope.row.id)"
+          >
+            <template #reference>
+              <el-button link type="danger" size="small">supprimer</el-button>
+            </template>
+          </el-popconfirm>
+        </div>
       </template>
     </el-table-column>
   </el-table>
+  <el-button type="primary" plain class="mt-4">
+    Ajouter un utilisateur
+  </el-button>
 </template>
 
 <script setup lang="ts">
@@ -42,6 +89,14 @@ onMounted(() => parameterStore.findUsers({}));
 
 async function deleteUser(id: number) {
   parameterStore.deleteUser({ where: { id } });
+}
+
+async function editUser(id: number) {
+  parameterStore.editUser(id);
+}
+
+async function saveUser() {
+  parameterStore.saveUser();
 }
 </script>
 

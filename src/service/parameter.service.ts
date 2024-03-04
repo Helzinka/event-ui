@@ -6,7 +6,11 @@ export async function findUsers(options: any) {
 }
 
 export async function deleteUser(options: any) {
-  console.log(options);
   const { data } = await instanceAxios.post('user/deleteUser', options);
+  return data;
+}
+
+export async function updateUser(options: any) {
+  const { data } = await instanceAxios.put('user/updateUser', options);
   return data;
 }
