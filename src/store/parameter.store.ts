@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { cloneDeep } from 'lodash';
 import * as Service from '@/service/parameter.service';
+import { ElMessage } from 'element-plus';
 
 const parameterState = {
   users: [] as any,
@@ -44,6 +45,16 @@ export const useParameterStore = defineStore('parameter', {
       this.users[indexUser] = userUpdated;
       this.edit = false;
       this.editingUser = {};
+    },
+    async createUser(option: any) {
+      const data = await Service.createUser(option);
+      if (data) {
+        this.users.push(data);
+        ElMessage({
+          message: `Utilisateru ${data.title} a bien été créé`,
+          type: 'success',
+        });
+      }
     },
     editUser(id: number) {
       this.edit = true;

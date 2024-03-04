@@ -19,9 +19,22 @@
             parameterStore.edit && parameterStore.editingUser.id == scope.row.id
           "
         >
+          <el-select
+            v-if="item == 'role'"
+            v-model="parameterStore.editingUser.role"
+            placeholder="Select"
+            style="width: 100px"
+          >
+            <el-option
+              v-for="item in selectOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
           <el-input
             class="pr-6"
-            v-if="item !== 'id'"
+            v-else-if="item !== 'id'"
             v-model="parameterStore.editingUser[item]"
           ></el-input>
           <div class="pr-6" v-else>{{ scope.row[item] }}</div>
@@ -73,30 +86,33 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-button type="primary" plain class="mt-4">
-    Ajouter un utilisateur
-  </el-button>
+  <UserCreate />
 </template>
 
 <script setup lang="ts">
 import { useParameterStore } from '@/store';
 import { onMounted } from 'vue';
 import { InfoFilled } from '@element-plus/icons-vue';
+import { RoleSchema } from '@/interfaces/prisma.interface';
 
 const parameterStore = useParameterStore();
 
 onMounted(() => parameterStore.findUsers({}));
 
+const selectOptions = RoleSchema.options.map(item => {
+  return { label: item, value: item };
+});
+
 async function deleteUser(id: number) {
-  parameterStore.deleteUser({ where: { id } });
+  await parameterStore.deleteUser({ where: { id } });
 }
 
-async function editUser(id: number) {
+function editUser(id: number) {
   parameterStore.editUser(id);
 }
 
 async function saveUser() {
-  parameterStore.saveUser();
+  await parameterStore.saveUser();
 }
 </script>
 
