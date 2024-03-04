@@ -10,9 +10,7 @@
       <div class="grow-1">
         <el-main class="h-full">
           <router-view v-slot="{ Component, route }">
-            <transition name="el-fade-in-linear">
-              <component :is="Component" :key="route.path" />
-            </transition>
+            <component :is="Component" :key="route.path" />
           </router-view>
         </el-main>
       </div>
