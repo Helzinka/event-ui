@@ -16,7 +16,9 @@
           </span>
         </div>
         <div class="flex items-center">
-          <el-tag v-for="cat in category" class="mr-2">{{ cat.name }}</el-tag>
+          <el-tag v-for="(cat, i) in category" :key="i" class="mr-2">
+            {{ cat.name }}
+          </el-tag>
           <el-tag :type="status.color">{{ status.content }}</el-tag>
         </div>
       </div>
@@ -37,7 +39,7 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { ArrowRight, View } from '@element-plus/icons-vue';
-import { type Dayjs, dayjs } from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
 
 const props = defineProps<{
   id?: number;

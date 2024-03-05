@@ -33,9 +33,8 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { ArrowRight, View, Delete, Edit } from '@element-plus/icons-vue';
-
-import type { Dayjs, dayjs } from 'dayjs';
+import { ArrowRight, Delete, Edit, View } from '@element-plus/icons-vue';
+import dayjs, { type Dayjs } from 'dayjs';
 
 const props = defineProps<{
   id?: number;
