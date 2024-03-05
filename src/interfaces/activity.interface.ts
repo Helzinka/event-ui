@@ -1,7 +1,6 @@
 import type { z } from 'zod';
 
 import {
-  ActivitySchema,
   ActivityFindManyArgsSchema,
   ActivityCreateArgsSchema,
   ActivityWithPartialRelationsSchema,

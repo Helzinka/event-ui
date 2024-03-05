@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useRouter } from 'vue-router';
 
 import { ElNotification } from 'element-plus';
 
@@ -27,6 +28,7 @@ export const useLoginStore = defineStore('login', {
   },
   actions: {
     async connect(email: string, password: string) {
+      const router = useRouter();
       const data = await client.connect(email, password);
       if (data.message) {
         this.error.message = data.message;
@@ -39,7 +41,7 @@ export const useLoginStore = defineStore('login', {
           message: `Bienvenue ${data.name}`,
           type: 'success',
         });
-        this.router.push({ name: 'reporting' });
+        await router.push({ name: 'reporting' });
       }
     },
     // ONLY DEV

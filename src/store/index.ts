@@ -8,8 +8,8 @@ import router from '@/router';
 import { useActivityStore } from '@/store/activity.store';
 import { useEventStore } from '@/store/event.store';
 import { useLoginStore } from '@/store/login.store';
-import { useReportingStore } from '@/store/reporting.store';
 import { useParameterStore } from '@/store/parameter.store';
+import { useReportingStore } from '@/store/reporting.store';
 
 /** Pinia Store */
 const pinia: Pinia = createPinia();

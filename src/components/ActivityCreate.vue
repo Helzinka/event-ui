@@ -97,11 +97,9 @@
 
 <script setup lang="ts">
 import { useActivityStore } from '@/store';
-import { type Ref, ref } from 'vue';
-import { reactive } from 'vue';
+import { type Ref, ref, reactive, computed } from 'vue';
 
 import { CirclePlusFilled } from '@element-plus/icons-vue';
-import { computed } from 'vue';
 
 const activityStore = useActivityStore();
 const createCategorySwitch = ref(false);
@@ -119,7 +117,7 @@ let form = reactive({
   end: Date,
 });
 
-// adapter par la bdd
+// facto: use typeRoom zod enum instead
 const typeRoom = [
   { value: 'PLENIERE', label: 'Plenière' },
   { value: 'NORMAL', label: 'Normal' },
@@ -159,7 +157,7 @@ async function createActivity() {
     },
   });
   dialogFormVisible.value = false;
-  // reset form after create, better approch ?
+  // note: better way to clean reactive data ?
   form = {
     title: '',
     description: '',

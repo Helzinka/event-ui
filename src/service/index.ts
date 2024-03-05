@@ -15,7 +15,7 @@ export const instanceAxios = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
+// todo: add token type
 // [Middleware interceptor]
 instanceAxios.interceptors.request.use(config => {
   const loginStore = useLoginStore();

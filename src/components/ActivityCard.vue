@@ -2,7 +2,7 @@
   <el-card shadow="never" class="box-card">
     <template #header>
       <div class="flex flex-col">
-        <div class="flex items-center mb-2">
+        <div class="mb-2 flex items-center">
           <span class="text-lg">{{ title }}</span>
           <el-divider direction="vertical" />
           <span class="text-sm text-gray-500 font-light">
@@ -16,13 +16,13 @@
           </span>
         </div>
         <div class="flex items-center">
-          <el-tag class="mr-2" v-for="cat in category">{{ cat.name }}</el-tag>
+          <el-tag v-for="cat in category" class="mr-2">{{ cat.name }}</el-tag>
           <el-tag :type="status.color">{{ status.content }}</el-tag>
         </div>
       </div>
     </template>
     <div>{{ description }}</div>
-    <div class="mt-4 flex justify-between items-center">
+    <div class="mt-4 flex items-center justify-between">
       <span class="text-gray-400">{{ ticketStatus }}</span>
       <el-button @click="goToActivity">
         <el-icon class="mr-2"><View /></el-icon>
@@ -37,9 +37,7 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { ArrowRight, View } from '@element-plus/icons-vue';
-import dayjs from 'dayjs';
-
-import type { Dayjs } from 'dayjs';
+import { type Dayjs, dayjs } from 'dayjs';
 
 const props = defineProps<{
   id?: number;
@@ -47,7 +45,8 @@ const props = defineProps<{
   description?: string;
   ticketMax?: number;
   ticketBuy?: number;
-  category?: any; // replace
+  // facto: better type
+  category?: any;
   start: Dayjs;
   end: Dayjs;
 }>();

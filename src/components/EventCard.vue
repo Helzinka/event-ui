@@ -21,7 +21,7 @@
     <div>{{ description }}</div>
     <div class="mt-4 flex justify-end">
       <el-button-group class="ml-4">
-        <el-button @click="goToActivity" :icon="View" />
+        <el-button :icon="View" @click="goToActivity" />
         <el-button :icon="Edit" />
         <el-button :icon="Delete" />
       </el-button-group>
@@ -34,9 +34,8 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { ArrowRight, View, Delete, Edit } from '@element-plus/icons-vue';
-import dayjs from 'dayjs';
 
-import type { Dayjs } from 'dayjs';
+import type { Dayjs, dayjs } from 'dayjs';
 
 const props = defineProps<{
   id?: number;

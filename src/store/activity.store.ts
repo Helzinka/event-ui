@@ -11,9 +11,17 @@ import type { Event } from '@/interfaces/event.interface';
 
 import * as client from '@/service/activity.service';
 
-const activityState = {
-  event: {} as Event,
-  activies: [] as Activies,
+interface ActivityState {
+  event: Event;
+  activies: Activies;
+  loading: {
+    activies: boolean;
+  };
+}
+
+const activityState: ActivityState = {
+  event: {},
+  activies: [],
   loading: {
     activies: false,
   },
@@ -31,7 +39,7 @@ export const useActivityStore = defineStore('activity', {
         state.activies.filter(item => item.title?.includes(title));
     },
     showCategories: state => {
-      // replace with bdd
+      // bug: replace with categories from bdd
       const categories: string[] = [];
 
       for (const item of state.activies) {

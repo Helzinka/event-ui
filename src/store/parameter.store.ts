@@ -1,8 +1,12 @@
 import { defineStore } from 'pinia';
+
 import { cloneDeep } from 'lodash';
-import * as Service from '@/service/parameter.service';
+
 import { ElMessage } from 'element-plus';
 
+import * as Service from '@/service/parameter.service';
+
+// todo: add user type
 const parameterState = {
   users: [] as any,
   edit: false,
@@ -26,8 +30,8 @@ export const useParameterStore = defineStore('parameter', {
       this.users = await Service.findUsers(options);
     },
     async deleteUser(options: any) {
-      // check if it's status ok
-      const userDeleted = await Service.deleteUser(options);
+      // todo: check if user is really delete
+      await Service.deleteUser(options);
       this.users = this.users.filter(
         (item: any) => item.id !== options.where.id
       );
@@ -40,7 +44,7 @@ export const useParameterStore = defineStore('parameter', {
       });
       // check if it true
       const indexUser = this.users.findIndex(
-        (item: any) => item.id == this.editingUser.id
+        (item: any) => item.id === this.editingUser.id
       );
       this.users[indexUser] = userUpdated;
       this.edit = false;
@@ -59,7 +63,7 @@ export const useParameterStore = defineStore('parameter', {
     editUser(id: number) {
       this.edit = true;
       this.editingUser = cloneDeep(
-        this.users.find((item: any) => item.id == id)
+        this.users.find((item: any) => item.id === id)
       );
     },
   },

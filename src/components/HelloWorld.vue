@@ -3,7 +3,7 @@ import { ref, type Ref } from 'vue';
 
 import { ElMessage } from 'element-plus';
 
-defineProps({
+const props = defineProps({
   msg: {
     type: String,
     default: 'Somne Message',
@@ -23,7 +23,7 @@ const toast = () => {
 
 <template>
   <div class="text-center">
-    <h1>{{ msg }}</h1>
+    <h1>{{ props.msg }}</h1>
 
     <p>
       See
@@ -31,7 +31,6 @@ const toast = () => {
       for more information.
     </p>
 
-    <!-- example components -->
     <div class="mb-4">
       <el-button size="large" @click="toast">El Message</el-button>
     </div>
