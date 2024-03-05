@@ -15,6 +15,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "build:analyze": "vite build --mode analyze",
     "build:clean": "rimraf dist",
+    "lint:perf": "set TIMING=1 && eslint --ext .js,.jsx,.ts,.tsx src/components --cache --cache-strategy metadata",
     "lint": "eslint . --fix --cache --cache-location ./node_modules/.vite/vite-plugin-eslint && prettier . -w -u",
     "lint:style": "stylelint \"./**/*.{css,sass,scss,htm,html,vue}\" --fix --cache-location ./node_modules/.vite/vite-plugin-stylelint && prettier \"./**/*.{css,sass,scss,htm,html,vue}\" -w -u",
     "preview": "vite preview",

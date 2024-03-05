@@ -2,9 +2,8 @@ import { instanceAxios } from './index';
 
 import type {
   Actity,
-  Activies,
-  ActityFind,
   ActityCreate,
+  ActityFind,
 } from '@/interfaces/activity.interface';
 
 export async function findActivitiesFromEvent(options: ActityFind) {

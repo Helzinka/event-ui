@@ -25,7 +25,6 @@ parserOptions:
     - .vue
 plugins:
   - import
-  - tsdoc
   - yaml
   - vue
 rules:
@@ -54,9 +53,9 @@ rules:
   import/no-named-as-default-member: off # Fix for Element Plus
   import/no-named-as-default: off # Fix for Unocss
   import/no-unresolved:
-    - error
+    - warn
     - ignore:
-        - '^virtual:' # Fix for unocss and vite.
+        - '^virtual:'
   import/order: # Sort Import Order. see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md#importorder-enforce-a-convention-in-module-import-order
     - warn
     - groups:
@@ -79,7 +78,6 @@ rules:
       alphabetize:
         order: asc
       newlines-between: always
-  tsdoc/syntax: warn
   vue/html-self-closing: # A tag with no content should be written like <br />.
     - error
     - html:
