@@ -28,7 +28,6 @@ plugins:
   - yaml
   - vue
 rules:
-  # require-jsdoc: warn
   no-unused-vars: warn
   '@typescript-eslint/array-type':
     - error
@@ -77,7 +76,6 @@ rules:
         - builtin
       alphabetize:
         order: asc
-      newlines-between: always
   vue/html-self-closing: # A tag with no content should be written like <br />.
     - error
     - html:
@@ -88,8 +86,8 @@ settings:
     '@typescript-eslint/parser':
       - .ts
       - .tsx
-    vue-eslint-parser:
-      - .vue
+  vue-eslint-parser:
+    - .vue
   import/resolver:
     typescript: true
     alias:

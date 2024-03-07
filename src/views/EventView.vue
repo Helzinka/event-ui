@@ -38,13 +38,14 @@
 
 <script setup lang="ts">
 import { useActivityStore } from '@/store';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { ArrowRight } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
 
 const activityStore = useActivityStore();
+const search = ref('');
 
 onMounted(async () => {
   const route = useRoute();

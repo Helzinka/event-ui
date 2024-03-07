@@ -19,7 +19,9 @@
           <el-tag v-for="(cat, i) in category" :key="i" class="mr-2">
             {{ cat.name }}
           </el-tag>
-          <el-tag :type="status.color">{{ status.content }}</el-tag>
+          <el-tag :type="status.color">
+            {{ status.content }}
+          </el-tag>
         </div>
       </div>
     </template>
@@ -27,7 +29,9 @@
     <div class="mt-4 flex items-center justify-between">
       <span class="text-gray-400">{{ ticketStatus }}</span>
       <el-button @click="goToActivity">
-        <el-icon class="mr-2"><View /></el-icon>
+        <el-icon class="mr-2">
+          <View />
+        </el-icon>
         Détails
       </el-button>
     </div>
@@ -56,11 +60,11 @@ const props = defineProps<{
 const router = useRouter();
 
 const status = computed(() => {
-  if (dayjs().isAfter(props.start) && dayjs().isBefore(props.end))
+  if (dayjs().isAfter(props.start) && dayjs().isBefore(props.end)) {
     return { content: 'En cours', color: 'success' };
-  else if (dayjs().isAfter(props.end))
+  } else if (dayjs().isAfter(props.end)) {
     return { content: 'Finis', color: 'danger' };
-  else return { content: 'A venir', color: 'warning' };
+  } else return { content: 'A venir', color: 'warning' };
 });
 
 const ticketStatus = computed(() => {
