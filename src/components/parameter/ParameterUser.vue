@@ -97,7 +97,15 @@ import { RoleSchema } from '@/interfaces/prisma.interface';
 
 const parameterStore = useParameterStore();
 
-onMounted(() => parameterStore.findUsers({}));
+onMounted(() =>
+  parameterStore.findUsers({
+    where: {
+      role: {
+        notIn: ['GUEST', 'USER'],
+      },
+    },
+  })
+);
 
 const selectOptions = RoleSchema.options.map(item => {
   return { label: item, value: item };
@@ -107,12 +115,12 @@ async function deleteUser(id: number) {
   await parameterStore.deleteUser({ where: { id } });
 }
 
-function editUser(id: number) {
-  parameterStore.editUser(id);
-}
-
 async function saveUser() {
   await parameterStore.saveUser();
+}
+
+function editUser(id: number) {
+  parameterStore.editUser(id);
 }
 </script>
 

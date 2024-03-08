@@ -82,10 +82,11 @@ let form = reactive({
   company: '',
 });
 
-// adapter par la bdd
-const roleOptions = RoleSchema.options.map(item => {
-  return { label: item, value: item };
-});
+const roleOptions = RoleSchema.options
+  .filter(item => ['MANAGER', 'ADMIN'].includes(item))
+  .map(item => {
+    return { label: item, value: item };
+  });
 
 async function createUser() {
   parameterStore.createUser({ data: { ...form } });
