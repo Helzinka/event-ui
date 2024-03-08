@@ -15,25 +15,38 @@
             {{ dayjs(event.end).format('DD MMMM YYYY') }}
           </span>
         </div>
+        <!-- note: try to fix ts  -->
         <el-tag :type="status.color">{{ status.content }}</el-tag>
       </div>
     </template>
     <div>{{ event.description }}</div>
     <div class="mt-4 flex justify-end">
-      <el-button-group class="ml-4">
+      <el-button-group>
         <el-button :icon="View" @click="goToActivity" />
         <EventUpdate :event />
-        <el-button :icon="Delete" />
+        <el-popconfirm
+          width="300"
+          confirm-button-text="Oui"
+          cancel-button-text="Non"
+          :icon="InfoFilled"
+          icon-color="#626AEF"
+          title="Etes vous sur de vouloir supprimer cette évènement "
+          @confirm="deleteEvent"
+        >
+          <template #reference>
+            <el-button :icon="Delete" />
+          </template>
+        </el-popconfirm>
       </el-button-group>
     </div>
   </el-card>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import type { Event } from '@/interfaces/event.interface';
-import { ArrowRight, Delete, View } from '@element-plus/icons-vue';
+import { ArrowRight, Delete, View, InfoFilled } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
 import { useEventStore } from '@/store/event.store';
 
@@ -52,5 +65,9 @@ const status = computed(() => {
 
 async function goToActivity() {
   await router.push({ name: 'eventByid', params: { eventId: props.event.id } });
+}
+
+async function deleteEvent() {
+  await eventStore.deleteEvent({ where: { id: props.event.id } });
 }
 </script>

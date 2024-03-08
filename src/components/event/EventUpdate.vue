@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import { cloneDeep } from 'lodash';
 import type { Event } from '@/interfaces/event.interface';
@@ -49,23 +49,25 @@ import { useEventStore } from '@/store/event.store';
 
 const props = defineProps<{ event: Event }>();
 const eventStore = useEventStore();
-const dialogFormVisible = ref(false);
-const formDate = ref();
-let form = ref<Event>();
+let dialogFormVisible = ref(false);
+let formDate = ref();
+let form = reactive({} as Event);
 
 function copyEvent() {
-  form.value = cloneDeep(props.event);
-  console.log(form);
-  formDate.value = [form.value.start, form.value.end];
+  Object.assign(form, props.event);
+  formDate.value = [form.start, form.end];
   dialogFormVisible.value = true;
 }
 
 async function updateEvent() {
-  if (form.value) {
-    form.value.start = formDate.value[0];
-    form.value.end = formDate.value[1];
+  if (form) {
+    form.start = formDate.value[0];
+    form.end = formDate.value[1];
   }
-  await eventStore.updateEvent({ data: form });
+  await eventStore.updateEvent({
+    data: form,
+    where: { id: form.id },
+  });
   dialogFormVisible.value = false;
 }
 </script>

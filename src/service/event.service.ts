@@ -6,6 +6,7 @@ import type {
   EventFind,
   EventCreate,
   EventUpdate,
+  EventDelete,
 } from '@/interfaces/event.interface';
 
 export async function getEvents(options: EventFind) {
@@ -20,5 +21,10 @@ export async function createEvent(options: EventCreate) {
 
 export async function updateEvent(options: EventUpdate) {
   const { data } = await instanceAxios.post<Event>('event/update', options);
+  return data;
+}
+
+export async function deleteEvent(options: EventDelete) {
+  const { data } = await instanceAxios.post<Event>('event/delete', options);
   return data;
 }

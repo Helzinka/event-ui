@@ -53,11 +53,11 @@ export const useEventStore = defineStore('event', {
       }
     },
     async deleteEvent(options: any) {
-      const data = await service.createEvent(options);
+      const data = await service.deleteEvent(options);
       if (data) {
-        this.events.push(data);
+        this.events = this.events.filter(event => event.id !== data.id);
         ElMessage({
-          message: `Evènement ${data.title} a été supprimé`,
+          message: `L'evènement ${data.title} a bien été supprimé`,
           type: 'success',
         });
       }
@@ -65,11 +65,9 @@ export const useEventStore = defineStore('event', {
     async updateEvent(options: EventUpdate) {
       const data = await service.updateEvent(options);
       if (data) {
-        this.events = this.events.map(item => {
-          if (item.id === data.id) {
-            return { ...data };
-          }
-        });
+        this.events.find(
+          event => event.id === data.id && Object.assign(event, data)
+        );
         ElMessage({
           message: `l'évènement ${data.title} a été modifié`,
           type: 'success',

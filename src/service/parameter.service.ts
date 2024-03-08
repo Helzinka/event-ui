@@ -12,7 +12,7 @@ export async function deleteUser(options: any) {
 }
 // todo: add better type options
 export async function updateUser(options: any) {
-  const { data } = await instanceAxios.put('user/updateUser', options);
+  const { data } = await instanceAxios.post('user/updateUser', options);
   return data;
 }
 // todo: add better type options
