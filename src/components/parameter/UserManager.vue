@@ -86,16 +86,16 @@
       </template>
     </el-table-column>
   </el-table>
-  <UserCreate />
+  <CreateUser />
 </template>
 
 <script setup lang="ts">
-import { useParameterStore } from '@/store';
+import { useUserManagerStore } from '@/store/userManager.store';
 import { onMounted } from 'vue';
 import { InfoFilled } from '@element-plus/icons-vue';
 import { RoleSchema } from '@/interfaces/prisma.interface';
 
-const parameterStore = useParameterStore();
+const parameterStore = useUserManagerStore();
 
 onMounted(() =>
   parameterStore.findUsers({

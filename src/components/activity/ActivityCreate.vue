@@ -96,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from '@/store';
+import { useActivityStore } from '@/store/activity.store';
 import { type Ref, ref, reactive, computed } from 'vue';
 
 import { CirclePlusFilled } from '@element-plus/icons-vue';

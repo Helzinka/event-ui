@@ -73,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { useReportingStore } from '@/store';
+import { useReportingStore } from '@/store/reporting.store';
 import { onMounted } from 'vue';
 
 import { InfoFilled } from '@element-plus/icons-vue';

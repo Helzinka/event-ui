@@ -1,7 +1,4 @@
 <template>
-  <!-- <h1>Evènements</h1>
-    <el-divider /> -->
-  <!-- actions event -->
   <el-breadcrumb :separator-icon="ArrowRight">
     <el-breadcrumb-item :to="{ path: '/events' }">
       <h3>Evènements</h3>
@@ -18,31 +15,24 @@
   <!-- card event -->
   <el-row v-loading="eventStore.loading.event" :gutter="20">
     <el-col
-      v-for="event in eventStore.filterEventByName(search)"
+      v-for="event in eventStore.showEventByName(search)"
       :key="event.id"
       class="mb-4"
       :span="12"
     >
-      <EventCard
-        :id="event.id"
-        :title="event.title"
-        :description="event.description"
-        :start="dayjs(event.start)"
-        :end="dayjs(event.end)"
-      />
+      <EventCard :event="event" />
     </el-col>
   </el-row>
 </template>
 
 <script setup lang="ts">
-import { useEventStore } from '@/store';
-import { onMounted, type Ref, ref } from 'vue';
-
+import { useEventStore } from '@/store/event.store';
+import { onMounted, ref } from 'vue';
 import { ArrowRight } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
 
 const eventStore = useEventStore();
-const search: Ref<string> = ref('');
+const search = ref('');
 
 onMounted(async () => {
   await eventStore.findEvents();

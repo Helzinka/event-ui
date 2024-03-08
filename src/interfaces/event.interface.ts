@@ -1,14 +1,18 @@
 import type { z } from 'zod';
 
 import {
+  EventSchema,
   EventFindManyArgsSchema,
-  EventPartialWithRelationsSchema,
+  EventWithRelationsSchema,
   EventCreateArgsSchema,
+  EventUpdateArgsSchema,
 } from '@/interfaces/prisma.interface';
 
-const EventPartialWithRelationsSchemaArray =
-  EventPartialWithRelationsSchema.array();
-export type Event = z.infer<typeof EventPartialWithRelationsSchema>;
-export type Events = z.infer<typeof EventPartialWithRelationsSchemaArray>;
+const EventArray = EventSchema.array();
+
+export type Event = z.infer<typeof EventSchema>;
+export type Events = z.infer<typeof EventArray>;
+export type EventWithRelations = z.infer<typeof EventWithRelationsSchema>;
 export type EventFind = z.infer<typeof EventFindManyArgsSchema>;
 export type EventCreate = z.infer<typeof EventCreateArgsSchema>;
+export type EventUpdate = z.infer<typeof EventUpdateArgsSchema>;

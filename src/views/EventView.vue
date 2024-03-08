@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from '@/store';
+import { useActivityStore } from '@/store/activity.store';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 

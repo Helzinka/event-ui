@@ -1,7 +1,7 @@
 <template>
   <el-tabs v-model="activeName" class="demo-tabs">
     <el-tab-pane label="Utilisateurs" name="first">
-      <ParameterUser />
+      <UserManager />
     </el-tab-pane>
     <el-tab-pane label="Support" name="second">Support</el-tab-pane>
   </el-tabs>

@@ -3,26 +3,26 @@
     <template #header>
       <div class="flex justify-between">
         <div class="flex items-center">
-          <span class="text-lg">{{ title }}</span>
+          <span class="text-lg">{{ event.title }}</span>
           <el-divider direction="vertical" />
           <span class="text-sm text-gray-500 font-light">
-            {{ start.format('DD MMMM YYYY') }}
+            {{ dayjs(event.start).format('DD MMMM YYYY') }}
           </span>
           <el-icon class="text-sm text-gray-500 font-light">
             <ArrowRight />
           </el-icon>
           <span class="text-sm text-gray-500 font-light">
-            {{ end.format('DD MMMM YYYY') }}
+            {{ dayjs(event.end).format('DD MMMM YYYY') }}
           </span>
         </div>
         <el-tag :type="status.color">{{ status.content }}</el-tag>
       </div>
     </template>
-    <div>{{ description }}</div>
+    <div>{{ event.description }}</div>
     <div class="mt-4 flex justify-end">
       <el-button-group class="ml-4">
         <el-button :icon="View" @click="goToActivity" />
-        <el-button :icon="Edit" />
+        <EventUpdate :event />
         <el-button :icon="Delete" />
       </el-button-group>
     </div>
@@ -30,31 +30,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import type { Event } from '@/interfaces/event.interface';
+import { ArrowRight, Delete, View } from '@element-plus/icons-vue';
+import dayjs from 'dayjs';
+import { useEventStore } from '@/store/event.store';
 
-import { ArrowRight, Delete, Edit, View } from '@element-plus/icons-vue';
-import dayjs, { type Dayjs } from 'dayjs';
-
-const props = defineProps<{
-  id?: number;
-  title?: string;
-  description?: string;
-  start: Dayjs;
-  end: Dayjs;
-}>();
+const props = defineProps<{ event: Event }>();
+const eventStore = useEventStore();
 
 const router = useRouter();
 
 const status = computed(() => {
-  if (dayjs().isAfter(props.start) && dayjs().isBefore(props.end))
+  if (dayjs().isAfter(props.event.start) && dayjs().isBefore(props.event.end))
     return { content: 'En cours', color: 'success' };
-  else if (dayjs().isAfter(props.end))
+  else if (dayjs().isAfter(props.event.end))
     return { content: 'Finis', color: 'danger' };
   else return { content: 'A venir', color: 'warning' };
 });
 
 async function goToActivity() {
-  await router.push({ name: 'eventByid', params: { eventId: props.id } });
+  await router.push({ name: 'eventByid', params: { eventId: props.event.id } });
 }
 </script>

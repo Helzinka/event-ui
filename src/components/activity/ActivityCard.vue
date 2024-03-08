@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { ArrowRight, View } from '@element-plus/icons-vue';

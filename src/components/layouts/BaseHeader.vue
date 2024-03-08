@@ -24,7 +24,7 @@
   </el-menu>
 </template>
 <script lang="ts" setup>
-import { useLoginStore } from '@/store';
+import { useLoginStore } from '@/store/login.store';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 

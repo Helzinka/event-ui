@@ -14,7 +14,7 @@ const parameterState = {
 };
 
 /** Parameter Store */
-export const useParameterStore = defineStore('parameter', {
+export const useUserManagerStore = defineStore('userManager', {
   state: () => parameterState,
   getters: {
     getColumns: state => {

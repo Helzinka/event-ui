@@ -64,12 +64,12 @@
 
 <script setup lang="ts">
 import { RoleSchema } from '@/interfaces/prisma.interface';
-import { useParameterStore } from '@/store';
+import { useUserManagerStore } from '@/store/userManager.store';
 import { ref } from 'vue';
 import { reactive } from 'vue';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 
-const parameterStore = useParameterStore();
+const parameterStore = useUserManagerStore();
 
 const dialogFormVisible = ref(false);
 let form = reactive({

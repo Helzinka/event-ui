@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { useEventStore } from '@/store';
+import { useEventStore } from '@/store/event.store';
 import { type Ref, ref, reactive } from 'vue';
 
 import { CirclePlusFilled } from '@element-plus/icons-vue';

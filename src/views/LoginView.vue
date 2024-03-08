@@ -13,7 +13,7 @@
   </el-form>
 </template>
 <script setup lang="ts">
-import { useLoginStore } from '@/store';
+import { useLoginStore } from '@/store/login.store';
 import { reactive } from 'vue';
 
 const loginStore = useLoginStore();

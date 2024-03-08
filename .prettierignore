@@ -5,3 +5,4 @@ dist/
 coverage/
 public/assets/
 components.d.ts
+src/interfaces/prisma.interfaces

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import { useLoginStore } from './store';
+import { useLoginStore } from './store/login.store';
 
 import ActivityView from '@/views/ActivityView.vue';
 import EventView from '@/views/EventView.vue';
@@ -53,7 +53,7 @@ router.beforeEach(async (to, from, next) => {
   const loginStore = useLoginStore();
   if (!loginStore.showIsConnected) {
     await loginStore.autoConnect();
-    next('/parameter');
+    next('/events');
   } else next();
 });
 
