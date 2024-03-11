@@ -23,7 +23,7 @@
     <div class="mt-4 flex justify-end">
       <el-button-group>
         <el-button :icon="View" @click="goToActivity" />
-        <EventUpdate :event />
+        <EventButtonUpdate :event />
         <el-popconfirm
           width="300"
           confirm-button-text="Oui"

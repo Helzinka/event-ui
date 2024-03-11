@@ -39,11 +39,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { ArrowRight, View } from '@element-plus/icons-vue';
 import dayjs, { type Dayjs } from 'dayjs';
+import { string } from 'zod';
 
 const props = defineProps<{
   id?: number;

@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ActivityButtonCreate: typeof import('./src/components/activity/ActivityButtonCreate.vue')['default']
     ActivityCard: typeof import('./src/components/activity/ActivityCard.vue')['default']
     ActivityCreate: typeof import('./src/components/activity/ActivityCreate.vue')['default']
     ActivityCreateActitit: typeof import('./src/components/ActivityCreateActitit.vue')['default']
@@ -53,8 +54,10 @@ declare module 'vue' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    EventButtonCreate: typeof import('./src/components/event/EventButtonCreate.vue')['default']
+    EventButtonUpdate: typeof import('./src/components/event/EventButtonUpdate.vue')['default']
     EventCard: typeof import('./src/components/event/EventCard.vue')['default']
-    EventCreate: typeof import('./src/components/event/EventCreate.vue')['default']
+    EventCreate: typeof import('./src/components/event/EventButtonUpdate.vue')['default']
     EventUpdate: typeof import('./src/components/event/EventUpdate.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     ParameterUser: typeof import('./src/components/parameter/userManager/ParameterUser.vue')['default']

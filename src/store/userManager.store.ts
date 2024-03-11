@@ -6,11 +6,11 @@ import { ElMessage } from 'element-plus';
 
 import * as Service from '@/service/parameter.service';
 
-// todo: add user type
+// todo: add user type && editinguser type
 const parameterState = {
   users: [] as any,
   edit: false,
-  editingUser: {},
+  editingUser: {} as any,
 };
 
 /** Parameter Store */

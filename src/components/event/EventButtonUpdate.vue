@@ -41,9 +41,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
-import { cloneDeep } from 'lodash';
 import type { Event } from '@/interfaces/event.interface';
 import { useEventStore } from '@/store/event.store';
 

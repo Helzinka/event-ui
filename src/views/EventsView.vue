@@ -10,7 +10,7 @@
       style="width: 200px"
       placeholder="rechercher un évènement"
     />
-    <EventCreate />
+    <EventButtonCreate />
   </div>
   <!-- card event -->
   <el-row v-loading="eventStore.loading.event" :gutter="20">
