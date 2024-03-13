@@ -54,6 +54,7 @@ declare module 'vue' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     EventButtonCreate: typeof import('./src/components/event/EventButtonCreate.vue')['default']
     EventButtonUpdate: typeof import('./src/components/event/EventButtonUpdate.vue')['default']
     EventCard: typeof import('./src/components/event/EventCard.vue')['default']
