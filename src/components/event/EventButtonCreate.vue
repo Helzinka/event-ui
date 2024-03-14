@@ -31,7 +31,7 @@
       </el-form-item>
       <el-form-item label="Date" prop="rangeDate">
         <el-date-picker
-          v-model="rangeDate"
+          v-model="form.rangeDate"
           type="datetimerange"
           range-separator="au"
           start-placeholder="Début"
@@ -39,16 +39,27 @@
           unlink-panels
         />
       </el-form-item>
-      <el-form-item label="Liste invité">
+      <el-form-item label="Liste invité" prop="liste">
         <el-upload
           ref="upload"
+          v-model:file-list="uploadFile"
           :action="requestURL"
           :limit="1"
           name="guestFile"
-          :auto-upload="false"
+          :on-error="
+            error => {
+              uploadError = error;
+            }
+          "
+          :before-upload="() => (uploadError = '')"
         >
           <template #trigger>
             <el-button type="primary">Envoyer le fichier</el-button>
+          </template>
+          <template #tip>
+            <div class="el-upload__tip text-red">
+              {{ uploadError }}
+            </div>
           </template>
         </el-upload>
       </el-form-item>
@@ -73,17 +84,17 @@ import type { FormInstance, FormRules } from 'element-plus';
 
 const requestURL = 'http://localhost:3000/api/event/file';
 const eventStore = useEventStore();
-const rangeDate = ref();
+const uploadFile = ref();
 const dialogFormVisible = ref(false);
 const upload = ref<UploadInstance>();
 const ruleFormRef = ref<FormInstance>();
+const uploadError = ref();
 
 const form = reactive<{
   title?: string;
   description?: string;
   location?: string;
-  start?: string;
-  end?: string;
+  rangeDate?: any;
 }>({});
 
 const rules = reactive<FormRules>({
@@ -91,7 +102,7 @@ const rules = reactive<FormRules>({
     {
       type: 'string',
       required: true,
-      message: 'Please select Activity zone',
+      message: 'Veuillez entrer un nom',
       trigger: 'change',
     },
   ],
@@ -99,7 +110,7 @@ const rules = reactive<FormRules>({
     {
       type: 'string',
       required: true,
-      message: 'Please select Activity count',
+      message: 'Veuillez entrer un lieux',
       trigger: 'change',
     },
   ],
@@ -107,14 +118,13 @@ const rules = reactive<FormRules>({
     {
       type: 'string',
       required: true,
-      message: 'Please select Activity count',
+      message: 'Veuillez entrer une description',
       trigger: 'change',
     },
   ],
   rangeDate: [
     {
       required: true,
-      message: 'Please pick a date',
       validator: checkRangeDate,
       trigger: 'blur',
     },
@@ -122,29 +132,29 @@ const rules = reactive<FormRules>({
 });
 
 function checkRangeDate(rule: any, value: any, callback: any) {
-  console.log(value);
+  if (!value) callback(new Error('Veuillez a entrer deux dates'));
 }
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('submit!');
+      createEvent();
     } else {
-      console.log('error submit!', fields);
+      console.error('error submit!', fields);
     }
   });
 };
 
 async function createEvent() {
-  form.start = rangeDate.value[0];
-  form.end = rangeDate.value[1];
-  await eventStore.createEvent({ data: form });
-  dialogFormVisible.value = false;
-}
-
-function submitUpload() {
+  const data = {
+    ...form,
+    start: form.rangeDate![0],
+    end: form.rangeDate![1],
+  };
+  await eventStore.createEvent({ data });
   upload.value!.submit();
+  dialogFormVisible.value = false;
 }
 </script>
 
