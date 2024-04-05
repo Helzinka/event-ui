@@ -14,7 +14,9 @@
   </div>
   <!-- card event -->
   <el-row v-loading="eventStore.loading.event" :gutter="20">
+    <div v-if="eventStore.error.message">{{ eventStore.error.message }}</div>
     <el-col
+      v-else
       v-for="event in eventStore.showEventByName(search)"
       :key="event.id"
       class="mb-4"
@@ -29,7 +31,6 @@
 import { useEventStore } from '@/store/event.store';
 import { onMounted, ref } from 'vue';
 import { ArrowRight } from '@element-plus/icons-vue';
-import dayjs from 'dayjs';
 
 const eventStore = useEventStore();
 const search = ref('');

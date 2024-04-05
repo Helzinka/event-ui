@@ -1,9 +1,6 @@
 import { defineStore } from 'pinia';
-
 import dayjs from 'dayjs';
-
 import type { Events } from '@/interfaces/event.interface';
-
 import * as client from '@/service/event.service';
 
 const reportingState = {
@@ -13,6 +10,7 @@ const reportingState = {
 /** Reporting Store */
 export const useReportingStore = defineStore('reporting', {
   state: () => reportingState,
+  // todo: make call to db instead of get all events
   getters: {
     showNumberEvents: state => {
       return state.events.length;
@@ -35,7 +33,7 @@ export const useReportingStore = defineStore('reporting', {
   },
   actions: {
     async findEvents() {
-      this.events = await client.getEvents({});
+      this.events = await client.findEvents();
     },
   },
 });

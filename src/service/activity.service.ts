@@ -1,17 +1,21 @@
 import { instanceAxios } from './index';
 
 import type {
-  Actity,
-  ActityCreate,
-  ActityFind,
+  Activity,
+  Activities,
+  ActivityFindOneArg,
+  ActivityCreateArg,
 } from '@/interfaces/activity.interface';
 
-export async function findActivitiesFromEvent(options: ActityFind) {
-  const { data } = await instanceAxios.post('event/findUnique', options);
+export async function findActivities(options: ActivityFindOneArg) {
+  const { data } = await instanceAxios.post<Activities>('event/find', options);
   return data;
 }
 
-export async function createActivity(options: ActityCreate) {
-  const { data } = await instanceAxios.post<Actity>('activity/create', options);
+export async function createActivity(options: ActivityCreateArg) {
+  const { data } = await instanceAxios.post<Activity>(
+    'activity/create',
+    options
+  );
   return data;
 }

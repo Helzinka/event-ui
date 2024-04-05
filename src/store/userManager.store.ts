@@ -26,8 +26,8 @@ export const useUserManagerStore = defineStore('userManager', {
     },
   },
   actions: {
-    async findUsers(options: any) {
-      this.users = await Service.findUsers(options);
+    async find() {
+      this.users = await Service.find();
     },
     async deleteUser(options: any) {
       // todo: check if user is really delete

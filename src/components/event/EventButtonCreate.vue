@@ -39,19 +39,25 @@
           unlink-panels
         />
       </el-form-item>
-      <el-form-item label="Liste invité" prop="liste">
+      <el-form-item label="Liste invité">
         <el-upload
           ref="upload"
           v-model:file-list="uploadFile"
           :action="requestURL"
           :limit="1"
-          name="guestFile"
+          method="post"
+          name="file"
           :on-error="
-            error => {
-              uploadError = error;
+            (error: any) => {
+              uploadError = JSON.parse(error.message).message;
             }
           "
-          :before-upload="() => (uploadError = '')"
+          :on-success="
+            (data: FileResponse) => {
+              console.log(data.data);
+              responseData = data.data;
+            }
+          "
         >
           <template #trigger>
             <el-button type="primary">Envoyer le fichier</el-button>
@@ -81,21 +87,23 @@ import { ref, reactive } from 'vue';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import type { UploadInstance } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
+import type { FileResponse } from '@/interfaces/event.interface';
 
-const requestURL = 'http://localhost:3000/api/event/file';
+const requestURL = 'http://localhost:3000/api/event/valideGuestList';
 const eventStore = useEventStore();
 const uploadFile = ref();
 const dialogFormVisible = ref(false);
 const upload = ref<UploadInstance>();
 const ruleFormRef = ref<FormInstance>();
 const uploadError = ref();
+const responseData = ref();
 
-const form = reactive<{
-  title?: string;
-  description?: string;
-  location?: string;
-  rangeDate?: any;
-}>({});
+const form = reactive({
+  title: '',
+  description: '',
+  location: '',
+  rangeDate: [] as Date[],
+});
 
 const rules = reactive<FormRules>({
   title: [
@@ -132,7 +140,8 @@ const rules = reactive<FormRules>({
 });
 
 function checkRangeDate(rule: any, value: any, callback: any) {
-  if (!value) callback(new Error('Veuillez a entrer deux dates'));
+  if (!value.length) callback(new Error('Veuillez a entrer deux dates'));
+  return true;
 }
 
 const submitForm = async (formEl: FormInstance | undefined) => {
@@ -140,6 +149,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       createEvent();
+      formEl.resetFields();
     } else {
       console.error('error submit!', fields);
     }
@@ -147,12 +157,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 };
 
 async function createEvent() {
+  const { rangeDate, ...other } = form;
   const data = {
-    ...form,
-    start: form.rangeDate![0],
-    end: form.rangeDate![1],
+    ...other,
+    start: rangeDate![0],
+    end: rangeDate![1],
+    guest: responseData.value,
   };
-  await eventStore.createEvent({ data });
+  await eventStore.createEvent(data);
   upload.value!.submit();
   dialogFormVisible.value = false;
 }

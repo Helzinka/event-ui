@@ -1,9 +1,5 @@
 <template>
-  <el-table
-    :data="parameterStore.users"
-    style="width: 100%"
-    table-layout="auto"
-  >
+  <el-table :data="parameterStore.users" style="width: 100%">
     <el-table-column
       v-for="(item, i) in parameterStore.getColumns"
       :prop="item"
@@ -97,15 +93,7 @@ import { RoleSchema } from '@/interfaces/prisma.interface';
 
 const parameterStore = useUserManagerStore();
 
-onMounted(() =>
-  parameterStore.findUsers({
-    where: {
-      role: {
-        notIn: ['GUEST', 'USER'],
-      },
-    },
-  })
-);
+onMounted(() => parameterStore.find());
 
 const selectOptions = RoleSchema.options.map(item => {
   return { label: item, value: item };

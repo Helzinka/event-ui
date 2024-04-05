@@ -17,6 +17,9 @@ interface ActivityState {
   loading: {
     activies: boolean;
   };
+  error: {
+    message: string;
+  };
 }
 
 const activityState: ActivityState = {
@@ -24,6 +27,9 @@ const activityState: ActivityState = {
   activies: [],
   loading: {
     activies: false,
+  },
+  error: {
+    message: 'string',
   },
 };
 
@@ -58,9 +64,8 @@ export const useActivityStore = defineStore('activity', {
     },
   },
   actions: {
-    async findActivitiesFromEvent(option: ActityFind) {
-      const { activity, ...event } =
-        await client.findActivitiesFromEvent(option);
+    async findActivities(option: ActityFindArg) {
+      const { activity, ...event } = await client.findActivities(option);
       this.activies = activity;
       this.event = event;
     },
