@@ -1,9 +1,6 @@
 import { defineStore } from 'pinia';
-
 import { cloneDeep } from 'lodash';
-
 import { ElMessage } from 'element-plus';
-
 import * as Service from '@/service/parameter.service';
 
 // todo: add user type && editinguser type
@@ -27,20 +24,17 @@ export const useUserManagerStore = defineStore('userManager', {
   },
   actions: {
     async find() {
-      this.users = await Service.find();
+      this.users = await Service.findUsers({ role: ['MANAGER', 'ADMIN'] });
     },
     async deleteUser(options: any) {
       // todo: check if user is really delete
-      await Service.deleteUser(options);
-      this.users = this.users.filter(
-        (item: any) => item.id !== options.where.id
-      );
+      const data = await Service.deleteUser(options);
+      if (data)
+        this.users = this.users.filter((item: any) => item.id !== data.id);
     },
     async saveUser() {
-      const { id, ...nextUser } = this.editingUser;
       const userUpdated = await Service.updateUser({
-        where: { id },
-        data: { ...nextUser },
+        ...this.editingUser,
       });
       // check if it true
       const indexUser = this.users.findIndex(
@@ -50,12 +44,12 @@ export const useUserManagerStore = defineStore('userManager', {
       this.edit = false;
       this.editingUser = {};
     },
-    async createUser(option: any) {
-      const data = await Service.createUser(option);
+    async createManager(option: any) {
+      const data = await Service.createManager(option);
       if (data) {
         this.users.push(data);
         ElMessage({
-          message: `Utilisateru ${data.title} a bien été créé`,
+          message: `Utilisateur ${data.name} a bien été créé`,
           type: 'success',
         });
       }

@@ -100,7 +100,7 @@ const selectOptions = RoleSchema.options.map(item => {
 });
 
 async function deleteUser(id: number) {
-  await parameterStore.deleteUser({ where: { id } });
+  await parameterStore.deleteUser({ id });
 }
 
 async function saveUser() {
