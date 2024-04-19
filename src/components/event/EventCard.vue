@@ -68,6 +68,6 @@ async function goToActivity() {
 }
 
 async function deleteEvent() {
-  await eventStore.deleteEvent({ where: { id: props.event.id } });
+  await eventStore.deleteEvent({ id: props.event.id });
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <el-button @click="copyEvent" :icon="Edit"></el-button>
+  <el-button @click="editEvent" :icon="Edit"></el-button>
   <el-dialog
     v-model="dialogFormVisible"
     title="Modification d'un évènement"
@@ -52,7 +52,7 @@ let dialogFormVisible = ref(false);
 let formDate = ref();
 let form = reactive({} as Event);
 
-function copyEvent() {
+function editEvent() {
   Object.assign(form, props.event);
   formDate.value = [form.start, form.end];
   dialogFormVisible.value = true;
@@ -63,10 +63,7 @@ async function updateEvent() {
     form.start = formDate.value[0];
     form.end = formDate.value[1];
   }
-  await eventStore.updateEvent({
-    data: form,
-    where: { id: form.id },
-  });
+  await eventStore.updateEvent({ ...form });
   dialogFormVisible.value = false;
 }
 </script>

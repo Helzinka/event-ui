@@ -54,7 +54,6 @@
           "
           :on-success="
             (data: FileResponse) => {
-              console.log(data.data);
               responseData = data.data;
             }
           "
