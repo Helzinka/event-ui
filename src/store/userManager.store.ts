@@ -33,14 +33,13 @@ export const useUserManagerStore = defineStore('userManager', {
         this.users = this.users.filter((item: any) => item.id !== data.id);
     },
     async saveUser() {
-      const userUpdated = await Service.updateUser({
-        ...this.editingUser,
-      });
-      // check if it true
-      const indexUser = this.users.findIndex(
-        (item: any) => item.id === this.editingUser.id
-      );
-      this.users[indexUser] = userUpdated;
+      const userUpdated = await Service.updateUser(this.editingUser);
+      if (userUpdated) {
+        const indexUser = this.users.findIndex((item: any) => item.id === userUpdated.id);
+        if (indexUser !== -1) {
+          this.users.splice(indexUser, 1, userUpdated);
+        }
+      }
       this.edit = false;
       this.editingUser = {};
     },

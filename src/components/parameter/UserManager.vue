@@ -44,7 +44,7 @@
             parameterStore.edit && parameterStore.editingUser.id == scope.row.id
           "
         >
-          <el-button link type="primary" size="small" @click="saveUser()">
+          <el-button link type="primary" size="small" @click="parameterStore.saveUser">
             sauvegarder
           </el-button>
           <el-button
@@ -61,7 +61,7 @@
             link
             type="primary"
             size="small"
-            @click="editUser(scope.row.id)"
+            @click="parameterStore.editUser(scope.row.id)"
           >
             editer
           </el-button>
@@ -72,7 +72,7 @@
             :icon="InfoFilled"
             icon-color="#626AEF"
             title="Etes vous sur de vouloir supprimer cette utilisateur "
-            @confirm="deleteUser(scope.row.id)"
+            @confirm="parameterStore.deleteUser({ id: scope.row.id })"
           >
             <template #reference>
               <el-button link type="danger" size="small">supprimer</el-button>
@@ -98,18 +98,6 @@ onMounted(() => parameterStore.find());
 const selectOptions = RoleSchema.options.map(item => {
   return { label: item, value: item };
 });
-
-async function deleteUser(id: number) {
-  await parameterStore.deleteUser({ id });
-}
-
-async function saveUser() {
-  await parameterStore.saveUser();
-}
-
-function editUser(id: number) {
-  parameterStore.editUser(id);
-}
 </script>
 
 <style>
