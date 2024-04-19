@@ -9,8 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     ActivityButtonCreate: typeof import('./src/components/activity/ActivityButtonCreate.vue')['default']
     ActivityCard: typeof import('./src/components/activity/ActivityCard.vue')['default']
-    ActivityCreate: typeof import('./src/components/activity/ActivityCreate.vue')['default']
-    ActivityCreateActitit: typeof import('./src/components/ActivityCreateActitit.vue')['default']
+    BaseBreadCrumb: typeof import('./src/components/layouts/BaseBreadCrumb.vue')['default']
     BaseHeader: typeof import('./src/components/layouts/BaseHeader.vue')['default']
     BaseSide: typeof import('./src/components/layouts/BaseSide.vue')['default']
     CreateUser: typeof import('./src/components/parameter/CreateUser.vue')['default']
@@ -65,6 +64,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     User: typeof import('./src/components/parameter/User.vue')['default']
+    UserButtonCreate: typeof import('./src/components/parameter/UserButtonCreate.vue')['default']
     UserCreate: typeof import('./src/components/parameter/UserCreate.vue')['default']
     UserManager: typeof import('./src/components/parameter/UserManager.vue')['default']
     UserManagerCreateUser: typeof import('./src/components/parameter/UserManagerCreateUser.vue')['default']

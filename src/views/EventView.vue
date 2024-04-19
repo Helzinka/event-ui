@@ -1,19 +1,12 @@
 <template>
-  <el-breadcrumb :separator-icon="ArrowRight">
-    <el-breadcrumb-item :to="{ path: '/events' }">
-      <h3>Evènements</h3>
-    </el-breadcrumb-item>
-    <el-breadcrumb-item>
-      <h3>{{ activityStore.event.title }}</h3>
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+  <BaseBreadCrumb />
   <div class="mb-6 flex justify-items-center gap-4">
     <el-input
       v-model="search"
       style="width: 200px"
       placeholder="rechercher une activitée"
     />
-    <ActivityCreate />
+    <ActivityButtonCreate />
   </div>
   <el-row :gutter="20">
     <el-col
@@ -40,18 +33,16 @@
 import { useActivityStore } from '@/store/activity.store';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-
 import { ArrowRight } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
 
+const route = useRoute();
 const activityStore = useActivityStore();
 const search = ref('');
 
 onMounted(async () => {
-  const route = useRoute();
-  await activityStore.findActivitiesFromEvent({
-    where: { id: route.params.eventId },
-    include: { activity: { include: { category: true } } },
+  await activityStore.findActivities({
+    eventTitle: route.params.eventTitle,
   });
 });
 </script>

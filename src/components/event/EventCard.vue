@@ -22,7 +22,7 @@
     <div>{{ event.description }}</div>
     <div class="mt-4 flex justify-end">
       <el-button-group>
-        <el-button :icon="View" @click="goToActivity" />
+        <el-button :icon="View" @click="goToActivities" />
         <EventButtonUpdate :event />
         <el-popconfirm
           width="300"
@@ -31,7 +31,7 @@
           :icon="InfoFilled"
           icon-color="#626AEF"
           title="Etes vous sur de vouloir supprimer cette évènement "
-          @confirm="deleteEvent"
+          @confirm="eventStore.deleteEvent({ id: props.event.id })"
         >
           <template #reference>
             <el-button :icon="Delete" />
@@ -63,11 +63,10 @@ const status = computed(() => {
   else return { content: 'A venir', color: 'warning' };
 });
 
-async function goToActivity() {
-  await router.push({ name: 'eventByid', params: { eventId: props.event.id } });
-}
-
-async function deleteEvent() {
-  await eventStore.deleteEvent({ id: props.event.id });
+async function goToActivities() {
+  await router.push({
+    name: 'acitiviesByEvent',
+    params: { eventTitle: props.event.title },
+  });
 }
 </script>

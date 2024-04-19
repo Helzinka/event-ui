@@ -1,30 +1,10 @@
 import { defineStore } from 'pinia';
-
 import { ElMessage } from 'element-plus';
-
-import type {
-  ActityFind,
-  Activies,
-  ActityCreate,
-} from '@/interfaces/activity.interface';
-import type { Event } from '@/interfaces/event.interface';
 
 import * as client from '@/service/activity.service';
 
-interface ActivityState {
-  event: Event;
-  activies: Activies;
-  loading: {
-    activies: boolean;
-  };
-  error: {
-    message: string;
-  };
-}
-
-const activityState: ActivityState = {
-  event: {},
-  activies: [],
+const activityState = {
+  activies: [] as any[],
   loading: {
     activies: false,
   },
@@ -42,7 +22,7 @@ export const useActivityStore = defineStore('activity', {
     },
     filterActivityByName: state => {
       return (title: string) =>
-        state.activies.filter(item => item.title?.includes(title));
+        state.activies.filter((item: any) => item.title?.includes(title));
     },
     showCategories: state => {
       // bug: replace with categories from bdd
@@ -64,12 +44,11 @@ export const useActivityStore = defineStore('activity', {
     },
   },
   actions: {
-    async findActivities(option: ActityFindArg) {
-      const { activity, ...event } = await client.findActivities(option);
-      this.activies = activity;
-      this.event = event;
+    async findActivities(option: any) {
+      const activies = await client.findActivities(option);
+      this.activies = activies;
     },
-    async createActivity(option: ActityCreate) {
+    async createActivity(option: any) {
       const data = await client.createActivity(option);
       if (data) {
         this.activies.push(data);

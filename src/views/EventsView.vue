@@ -1,9 +1,5 @@
 <template>
-  <el-breadcrumb :separator-icon="ArrowRight">
-    <el-breadcrumb-item :to="{ path: '/events' }">
-      <h3>Evènements</h3>
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+  <BaseBreadCrumb />
   <div class="mb-6 flex justify-items-center gap-4">
     <el-input
       v-model="search"
@@ -30,7 +26,6 @@
 <script setup lang="ts">
 import { useEventStore } from '@/store/event.store';
 import { onMounted, ref } from 'vue';
-import { ArrowRight } from '@element-plus/icons-vue';
 
 const eventStore = useEventStore();
 const search = ref('');
