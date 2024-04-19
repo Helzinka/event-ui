@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { ElMessage } from 'element-plus';
-
 import * as client from '@/service/activity.service';
 
 const activityState = {
   activies: [] as any[],
+  categories: [] as any[],
   loading: {
     activies: false,
   },
@@ -47,6 +47,10 @@ export const useActivityStore = defineStore('activity', {
     async findActivities(option: any) {
       const activies = await client.findActivities(option);
       this.activies = activies;
+    },
+    async findCategories(option: any) {
+      const categories = await client.findCategories(option);
+      this.categories = categories;
     },
     async createActivity(option: any) {
       const data = await client.createActivity(option);

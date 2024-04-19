@@ -4,7 +4,6 @@
 - format les message d'erreur en français depuis le back : login
 - type router depuis le store n'est pas compris
 - ajouter les categoris depuis le back
-- faire un file d'ariane en store
 - refaire le retour d'un user , only token + jwt reveal
 
 # css

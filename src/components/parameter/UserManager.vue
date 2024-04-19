@@ -44,7 +44,12 @@
             parameterStore.edit && parameterStore.editingUser.id == scope.row.id
           "
         >
-          <el-button link type="primary" size="small" @click="parameterStore.saveUser">
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="parameterStore.saveUser"
+          >
             sauvegarder
           </el-button>
           <el-button
@@ -82,7 +87,7 @@
       </template>
     </el-table-column>
   </el-table>
-  <CreateUser />
+  <UserButtonCreate />
 </template>
 
 <script setup lang="ts">

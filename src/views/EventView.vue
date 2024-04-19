@@ -33,7 +33,6 @@
 import { useActivityStore } from '@/store/activity.store';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { ArrowRight } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
 
 const route = useRoute();
@@ -44,6 +43,7 @@ onMounted(async () => {
   await activityStore.findActivities({
     eventTitle: route.params.eventTitle,
   });
+  await activityStore.findCategories();
 });
 </script>
 

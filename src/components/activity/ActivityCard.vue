@@ -44,7 +44,9 @@ import { useRouter, useRoute } from 'vue-router';
 
 import { ArrowRight, View } from '@element-plus/icons-vue';
 import dayjs, { type Dayjs } from 'dayjs';
-import { string } from 'zod';
+
+const router = useRouter();
+const route = useRoute();
 
 const props = defineProps<{
   id?: number;
@@ -57,9 +59,6 @@ const props = defineProps<{
   start: Dayjs;
   end: Dayjs;
 }>();
-
-const router = useRouter();
-const route = useRoute();
 
 const status = computed(() => {
   if (dayjs().isAfter(props.start) && dayjs().isBefore(props.end)) {

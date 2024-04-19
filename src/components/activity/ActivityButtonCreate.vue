@@ -100,6 +100,7 @@ import { useActivityStore } from '@/store/activity.store';
 import { type Ref, ref, reactive, computed } from 'vue';
 
 import { CirclePlusFilled } from '@element-plus/icons-vue';
+import { TypeRoomSchema } from '@/interfaces/activity.interface';
 
 const activityStore = useActivityStore();
 const createCategorySwitch = ref(false);
@@ -117,11 +118,9 @@ let form = reactive({
   end: Date,
 });
 
-// facto: use typeRoom zod enum instead
-const typeRoom = [
-  { value: 'PLENIERE', label: 'Plenière' },
-  { value: 'NORMAL', label: 'Normal' },
-];
+const typeRoom = TypeRoomSchema.options.map(item => {
+  return { label: item, value: item };
+});
 
 const createCategoryButtonName = computed(() => {
   return createCategorySwitch.value
@@ -129,6 +128,7 @@ const createCategoryButtonName = computed(() => {
     : 'Créer une categorie';
 });
 
+// note: adapt api call
 async function createActivity() {
   form.start = dateFromForm.value[0];
   form.end = dateFromForm.value[1];

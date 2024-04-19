@@ -1,6 +1,8 @@
 import { z } from 'zod';
+import { TagSchema } from './tag.interface';
 
 export const TypeRoomSchema = z.enum(['PLENIERE', 'NORMAL']);
+
 export const ActivityCreateArg = z.object({
   typeRoom: TypeRoomSchema,
   title: z.string({
@@ -46,7 +48,8 @@ export const ActivityCreateArg = z.object({
     })
     .nonnegative({ message: 'eventId must be > 0' }),
 });
-export const Activity = z.object({
+
+export const ActivityResponse = z.object({
   typeRoom: TypeRoomSchema,
   id: z.number().int(),
   title: z.string(),
@@ -60,6 +63,7 @@ export const Activity = z.object({
   ticketBuy: z.number(),
   replay: z.string().url().nullable(),
   eventId: z.number(),
+  category: z.lazy(() => TagSchema.array()).nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
@@ -131,17 +135,21 @@ export const ActivityUpdateArg = z.object({
     .nonnegative({ message: 'eventId must be > 0' })
     .optional(),
 });
-export const Activities = z.array(Activity);
+export const ActivitiesResponse = z.array(ActivityResponse);
 export const ActivityDeleteArg = z.object({ id: z.number().int() });
 export const ActivityFindOneArg = z.object({
-  id: z.number().int().optional(),
+  eventTitle: z.string(),
+  id: z.string().transform(Number).optional(),
   title: z.string().optional(),
-  eventId: z.number().int().optional(),
+});
+export const ActivitiesFindArg = z.object({
+  eventTitle: z.string(),
 });
 
 export type ActivityCreateArg = z.infer<typeof ActivityCreateArg>;
 export type ActivityUpdateArg = z.infer<typeof ActivityUpdateArg>;
-export type Activity = z.infer<typeof Activity>;
-export type Activities = z.infer<typeof Activities>;
+export type ActivityResponse = z.infer<typeof ActivityResponse>;
+export type ActivitiesResponse = z.infer<typeof ActivitiesResponse>;
 export type ActivityDeleteArg = z.infer<typeof ActivityDeleteArg>;
 export type ActivityFindOneArg = z.infer<typeof ActivityFindOneArg>;
+export type ActivitiesFindArg = z.infer<typeof ActivitiesFindArg>;
