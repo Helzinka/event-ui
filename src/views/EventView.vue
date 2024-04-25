@@ -40,10 +40,13 @@ const activityStore = useActivityStore();
 const search = ref('');
 
 onMounted(async () => {
+  activityStore.setCurrentEvent(route.params.eventTitle as string);
   await activityStore.findActivities({
-    eventTitle: route.params.eventTitle,
+    eventTitle: route.params.eventTitle as string,
   });
-  await activityStore.findCategories();
+  await activityStore.findCategories({
+    eventTitle: route.params.eventTitle as string,
+  });
 });
 </script>
 

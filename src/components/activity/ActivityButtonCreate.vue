@@ -97,15 +97,14 @@
 
 <script setup lang="ts">
 import { useActivityStore } from '@/store/activity.store';
-import { type Ref, ref, reactive, computed } from 'vue';
-
+import { ref, reactive, computed } from 'vue';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import { TypeRoomSchema } from '@/interfaces/activity.interface';
 
 const activityStore = useActivityStore();
 const createCategorySwitch = ref(false);
 const dateFromForm = ref();
-const dialogFormVisible: Ref<boolean> = ref(false);
+const dialogFormVisible = ref(false);
 let form = reactive({
   title: '',
   description: '',
@@ -128,36 +127,11 @@ const createCategoryButtonName = computed(() => {
     : 'Créer une categorie';
 });
 
-// note: adapt api call
 async function createActivity() {
   form.start = dateFromForm.value[0];
   form.end = dateFromForm.value[1];
-  const { category, ...activity } = form;
-  await activityStore.createActivity({
-    data: {
-      ...activity,
-      category: {
-        connectOrCreate: {
-          where: {
-            name: category,
-          },
-          create: {
-            name: category,
-          },
-        },
-      },
-      event: {
-        connect: {
-          id: activityStore.event.id,
-        },
-      },
-    },
-    include: {
-      category: true,
-    },
-  });
+  await activityStore.createActivity(form);
   dialogFormVisible.value = false;
-  // note: better way to clean reactive data ?
   form = {
     title: '',
     description: '',

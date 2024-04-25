@@ -43,16 +43,17 @@
 </template>
 
 <script setup lang="ts">
+import type { Event } from '@/interfaces/event.interface';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import type { Event } from '@/interfaces/event.interface';
 import { ArrowRight, Delete, View, InfoFilled } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
 import { useEventStore } from '@/store/event.store';
+import { useActivityStore } from '@/store/activity.store';
 
 const props = defineProps<{ event: Event }>();
 const eventStore = useEventStore();
-
+const activityStore = useActivityStore();
 const router = useRouter();
 
 const status = computed(() => {
@@ -68,5 +69,7 @@ async function goToActivities() {
     name: 'acitiviesByEvent',
     params: { eventTitle: props.event.title },
   });
+  // note: make sur event is not ref
+  activityStore.setCurrentEvent(props.event);
 }
 </script>

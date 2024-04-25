@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
 import { ElMessage } from 'element-plus';
 import * as client from '@/service/activity.service';
+import * as clientCategory from '@/service/category.service';
+import type { ActivityCreateArg } from '@/interfaces/activity.interface';
+import type { CategoriesFindArg } from '@/interfaces/category.interfaces';
 
 const activityState = {
   activies: [] as any[],
-  categories: [] as any[],
-  loading: {
-    activies: false,
-  },
-  error: {
-    message: 'string',
-  },
+  categories: [] as string[],
+  currentEvent: {} as any,
+  loading: false,
+  error: '',
 };
 
 /** Event Store */
@@ -25,22 +25,7 @@ export const useActivityStore = defineStore('activity', {
         state.activies.filter((item: any) => item.title?.includes(title));
     },
     showCategories: state => {
-      // bug: replace with categories from bdd
-      const categories: string[] = [];
-
-      for (const item of state.activies) {
-        if (item.category) {
-          for (const item2 of item.category) {
-            if (item2.name && categories.length <= 0 && item2.name) {
-              categories.push(item2.name);
-            }
-            if (item2.name && !categories.includes(item2.name)) {
-              categories.push(item2.name);
-            }
-          }
-        }
-      }
-      return categories;
+      return state.categories;
     },
   },
   actions: {
@@ -48,19 +33,25 @@ export const useActivityStore = defineStore('activity', {
       const activies = await client.findActivities(option);
       this.activies = activies;
     },
-    async findCategories(option: any) {
-      const categories = await client.findCategories(option);
-      this.categories = categories;
+    async findCategories(option: CategoriesFindArg) {
+      const categories = await clientCategory.findCategories(option);
+      if (categories.length)
+        this.categories = categories.map(item => item.name);
     },
     async createActivity(option: any) {
+      option.eventId = this.currentEvent.id;
       const data = await client.createActivity(option);
       if (data) {
         this.activies.push(data);
+        this.findCategories({ eventTitle: this.currentEvent.title });
         ElMessage({
           message: `Evènement ${data.title} bien créé`,
           type: 'success',
         });
       }
+    },
+    setCurrentEvent(event: any) {
+      this.currentEvent = event;
     },
   },
 });

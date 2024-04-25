@@ -1,8 +1,7 @@
 import { z } from 'zod';
-import { TagSchema } from './tag.interface';
+import { CategoriesResponse } from './category.interfaces';
 
 export const TypeRoomSchema = z.enum(['PLENIERE', 'NORMAL']);
-
 export const ActivityCreateArg = z.object({
   typeRoom: TypeRoomSchema,
   title: z.string({
@@ -41,6 +40,11 @@ export const ActivityCreateArg = z.object({
     required_error: 'ticketMax is required',
   }),
   replay: z.string().url({ message: 'invalid url' }).optional().nullable(),
+  category: z
+    .string({
+      invalid_type_error: 'category must be type string',
+    })
+    .optional(),
   eventId: z
     .number({
       invalid_type_error: 'eventId must be type number',
@@ -48,7 +52,6 @@ export const ActivityCreateArg = z.object({
     })
     .nonnegative({ message: 'eventId must be > 0' }),
 });
-
 export const ActivityResponse = z.object({
   typeRoom: TypeRoomSchema,
   id: z.number().int(),
@@ -61,9 +64,9 @@ export const ActivityResponse = z.object({
   end: z.coerce.date(),
   ticketMax: z.number(),
   ticketBuy: z.number(),
+  category: CategoriesResponse.optional(),
   replay: z.string().url().nullable(),
   eventId: z.number(),
-  category: z.lazy(() => TagSchema.array()).nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
@@ -127,6 +130,11 @@ export const ActivityUpdateArg = z.object({
     })
     .optional(),
   replay: z.string().url({ message: 'invalid url' }).optional().nullable(),
+  category: z
+    .string({
+      invalid_type_error: 'category must be type string',
+    })
+    .optional(),
   eventId: z
     .number({
       invalid_type_error: 'eventId must be type number',
@@ -146,6 +154,7 @@ export const ActivitiesFindArg = z.object({
   eventTitle: z.string(),
 });
 
+export type TypeRoom = z.infer<typeof TypeRoomSchema>;
 export type ActivityCreateArg = z.infer<typeof ActivityCreateArg>;
 export type ActivityUpdateArg = z.infer<typeof ActivityUpdateArg>;
 export type ActivityResponse = z.infer<typeof ActivityResponse>;

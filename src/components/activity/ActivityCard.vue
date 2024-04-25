@@ -41,7 +41,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-
 import { ArrowRight, View } from '@element-plus/icons-vue';
 import dayjs, { type Dayjs } from 'dayjs';
 
@@ -75,7 +74,7 @@ const ticketStatus = computed(() => {
 async function goToActivity() {
   await router.push({
     name: 'activityById',
-    params: { eventTitle: route.params.eventTitle, activityTitle: props.title }, // replace
+    params: { eventTitle: route.params.eventTitle, activityTitle: props.title },
   });
 }
 </script>

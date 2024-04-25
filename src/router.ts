@@ -33,6 +33,10 @@ const router = createRouter({
       name: 'acitiviesByEvent',
       component: EventView,
       meta: {
+        test(route: any) {
+          console.log('test', route);
+          return ['test'];
+        },
         breadCrumb(route: any) {
           const eventTitle = route.params.eventTitle;
           return [
