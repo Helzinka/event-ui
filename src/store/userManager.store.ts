@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { cloneDeep } from 'lodash';
 import { ElMessage } from 'element-plus';
-import * as Service from '@/service/parameter.service';
+import * as service from '@/service/parameter.service';
 
 // todo: add user type && editinguser type
 const parameterState = {
@@ -24,18 +24,20 @@ export const useUserManagerStore = defineStore('userManager', {
   },
   actions: {
     async find() {
-      this.users = await Service.findUsers({ role: ['MANAGER', 'ADMIN'] });
+      this.users = await service.findUsers({ role: ['MANAGER', 'ADMIN'] });
     },
     async deleteUser(options: any) {
       // todo: check if user is really delete
-      const data = await Service.deleteUser(options);
+      const data = await service.deleteUser(options);
       if (data)
         this.users = this.users.filter((item: any) => item.id !== data.id);
     },
     async saveUser() {
-      const userUpdated = await Service.updateUser(this.editingUser);
+      const userUpdated = await service.updateUser(this.editingUser);
       if (userUpdated) {
-        const indexUser = this.users.findIndex((item: any) => item.id === userUpdated.id);
+        const indexUser = this.users.findIndex(
+          (item: any) => item.id === userUpdated.id
+        );
         if (indexUser !== -1) {
           this.users.splice(indexUser, 1, userUpdated);
         }
@@ -44,7 +46,7 @@ export const useUserManagerStore = defineStore('userManager', {
       this.editingUser = {};
     },
     async createManager(option: any) {
-      const data = await Service.createManager(option);
+      const data = await service.createManager(option);
       if (data) {
         this.users.push(data);
         ElMessage({

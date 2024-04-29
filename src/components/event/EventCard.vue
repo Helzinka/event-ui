@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Event } from '@/interfaces/event.interface';
+import type { EventResponse } from '@/interfaces/event.interface';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowRight, Delete, View, InfoFilled } from '@element-plus/icons-vue';
@@ -51,7 +51,7 @@ import dayjs from 'dayjs';
 import { useEventStore } from '@/store/event.store';
 import { useActivityStore } from '@/store/activity.store';
 
-const props = defineProps<{ event: Event }>();
+const props = defineProps<{ event: EventResponse }>();
 const eventStore = useEventStore();
 const activityStore = useActivityStore();
 const router = useRouter();

@@ -100,7 +100,7 @@ router.beforeEach(async (to, from, next) => {
   const loginStore = useLoginStore();
   if (!loginStore.showIsConnected) {
     await loginStore.autoConnect();
-    next('/events');
+    next('/event/gadzooks/activities');
   } else next();
 });
 

@@ -43,14 +43,14 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
-import type { Event } from '@/interfaces/event.interface';
+import type { EventResponse } from '@/interfaces/event.interface';
 import { useEventStore } from '@/store/event.store';
 
-const props = defineProps<{ event: Event }>();
+const props = defineProps<{ event: EventResponse }>();
 const eventStore = useEventStore();
 let dialogFormVisible = ref(false);
 let formDate = ref();
-let form = reactive({} as Event);
+let form = reactive({} as EventResponse);
 
 function editEvent() {
   Object.assign(form, props.event);

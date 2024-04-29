@@ -1,3 +1,4 @@
+import { UserGuestCreateArg } from '@modules/user/user.schema';
 import { any, string, z } from 'zod';
 
 export const EventCreateArg = z.object({
@@ -22,7 +23,7 @@ export const EventCreateArg = z.object({
     required_error: 'end is required',
   }),
   private: z.boolean().default(false).optional(),
-  guest: z.array(z.object({})),
+  guest: UserGuestCreateArg.array().optional(),
 });
 export const EventUpdateArg = z.object({
   id: z.number().int(),
@@ -32,9 +33,10 @@ export const EventUpdateArg = z.object({
   start: z.coerce.date().optional(),
   end: z.coerce.date().optional(),
   private: z.boolean().optional(),
-  guest: z.array(z.object({})),
+  // note: better type for guest
+  guest: z.any().optional(),
 });
-export const Event = z.object({
+export const EventResponse = z.object({
   id: z.number().int(),
   title: z.string(),
   description: z.string(),
@@ -51,10 +53,9 @@ export const EventFindOneArg = z.object({
   id: z.string().transform(Number).optional(),
   title: z.string().optional(),
 });
-export const Events = z.array(Event);
+export const EventsResponse = z.array(EventResponse);
 export const EventDeleteArg = z.object({ id: z.string().transform(Number) });
 export const EventFileArg = z.object({
-  page: string(),
   file: any(),
 });
 export const FileResponse = z.object({
@@ -65,8 +66,7 @@ export const FileResponse = z.object({
 export type EventCreateArg = z.infer<typeof EventCreateArg>;
 export type EventUpdateArg = z.infer<typeof EventUpdateArg>;
 export type EventFindOneArg = z.infer<typeof EventFindOneArg>;
-export type Event = z.infer<typeof Event>;
-export type Events = z.infer<typeof Events>;
+export type EventResponse = z.infer<typeof EventResponse>;
+export type EventsResponse = z.infer<typeof EventsResponse>;
 export type EventDeleteArg = z.infer<typeof EventDeleteArg>;
 export type EventFileArg = z.infer<typeof EventFileArg>;
-export type FileResponse = z.infer<typeof FileResponse>;

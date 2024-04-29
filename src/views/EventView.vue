@@ -15,16 +15,7 @@
       class="mb-4"
       :span="12"
     >
-      <ActivityCard
-        :id="activity.id"
-        :title="activity.title"
-        :description="activity.description"
-        :ticket-max="activity.ticketMax"
-        :ticket-buy="activity.ticketBuy"
-        :category="activity.category"
-        :start="dayjs(activity.start)"
-        :end="dayjs(activity.end)"
-      />
+      <ActivityCard :activity="activity" />
     </el-col>
   </el-row>
 </template>
@@ -33,7 +24,6 @@
 import { useActivityStore } from '@/store/activity.store';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import dayjs from 'dayjs';
 
 const route = useRoute();
 const activityStore = useActivityStore();

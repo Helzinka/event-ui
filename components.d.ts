@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActivityButtonCreate: typeof import('./src/components/activity/ActivityButtonCreate.vue')['default']
+    ActivityButtonUpdate: typeof import('./src/components/activity/ActivityButtonUpdate.vue')['default']
     ActivityCard: typeof import('./src/components/activity/ActivityCard.vue')['default']
     BaseBreadCrumb: typeof import('./src/components/layouts/BaseBreadCrumb.vue')['default']
     BaseHeader: typeof import('./src/components/layouts/BaseHeader.vue')['default']
