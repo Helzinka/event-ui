@@ -131,7 +131,10 @@ async function createActivity() {
   form.start = dateFromForm.value[0];
   form.end = dateFromForm.value[1];
   await activityStore.createActivity(form);
+
   dialogFormVisible.value = false;
+  dateFromForm.value = [];
+  createCategorySwitch.value = false;
   form = {
     title: '',
     description: '',
