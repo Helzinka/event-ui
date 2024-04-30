@@ -56,7 +56,7 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Annuler</el-button>
-        <el-button type="primary" @click="createUser">Valider</el-button>
+        <el-button type="primary" @click="createManager">Valider</el-button>
       </div>
     </template>
   </el-dialog>
@@ -78,7 +78,7 @@ let form = reactive({
   password: '',
   email: '',
   role: '',
-  archipel: '',
+  archipel: false,
   company: '',
 });
 
@@ -88,8 +88,8 @@ const roleOptions = RoleSchema.options
     return { label: item, value: item };
   });
 
-async function createUser() {
-  parameterStore.createUser({ data: { ...form } });
+async function createManager() {
+  parameterStore.createManager({ ...form });
   dialogFormVisible.value = false;
 }
 </script>

@@ -1,30 +1,46 @@
+import { pa } from 'element-plus/es/locales.mjs';
 import { instanceAxios } from './index';
 
 import type {
-  Event,
-  Events,
-  EventFind,
-  EventCreate,
-  EventUpdate,
-  EventDelete,
+  EventResponse,
+  EventsResponse,
+  EventFindOneArg,
+  EventCreateArg,
+  EventUpdateArg,
+  EventDeleteArg,
 } from '@/interfaces/event.interface';
 
-export async function getEvents(options: EventFind) {
-  const { data } = await instanceAxios.post<Events>('event/find', options);
+export async function findEvents() {
+  const { data } = await instanceAxios.get<EventsResponse>('event/find');
   return data;
 }
 
-export async function createEvent(options: EventCreate) {
-  const { data } = await instanceAxios.post<Event>('event/create', options);
+export async function findOneEvent(options: EventFindOneArg) {
+  const { data } = await instanceAxios.get<EventResponse>('event/findOne', {
+    params: options,
+  });
   return data;
 }
 
-export async function updateEvent(options: EventUpdate) {
-  const { data } = await instanceAxios.post<Event>('event/update', options);
+export async function createEvent(options: EventCreateArg) {
+  const { data } = await instanceAxios.post<EventResponse>(
+    'event/create',
+    options
+  );
   return data;
 }
 
-export async function deleteEvent(options: EventDelete) {
-  const { data } = await instanceAxios.post<Event>('event/delete', options);
+export async function updateEvent(options: EventUpdateArg) {
+  const { data } = await instanceAxios.patch<EventResponse>(
+    'event/update',
+    options
+  );
+  return data;
+}
+
+export async function deleteEvent(options: EventDeleteArg) {
+  const { data } = await instanceAxios.delete<EventResponse>('event/delete', {
+    params: options,
+  });
   return data;
 }

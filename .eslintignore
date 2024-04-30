@@ -1,9 +1,0 @@
-node_modules/
-.husky/
-.vscode/
-.yarn/
-coverage/
-dist/
-public/assets/
-tsconfig.*.json
-components.d.ts

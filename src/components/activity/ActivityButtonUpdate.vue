@@ -1,11 +1,8 @@
 <template>
-  <el-button type="primary" plain @click="dialogFormVisible = true">
-    <el-icon class="mr-2"><CirclePlusFilled /></el-icon>
-    Créer une activitée
-  </el-button>
+  <el-button @click="editEvent" :icon="Edit"></el-button>
   <el-dialog
     v-model="dialogFormVisible"
-    title="Création d'une activitée"
+    title="Modification d'un évènement"
     width="600px"
   >
     <el-form :model="form" label-position="right" label-width="120px">
@@ -39,7 +36,7 @@
         <div class="mr-2">
           <el-input
             v-if="createCategorySwitch"
-            v-model="form.category"
+            v-model="newCategory"
             placeholder="nom de la catégorie"
           />
           <el-select
@@ -56,7 +53,11 @@
             />
           </el-select>
         </div>
-        <el-button type="primary" plain @click="switchCategory">
+        <el-button
+          type="primary"
+          plain
+          @click="createCategorySwitch = !createCategorySwitch"
+        >
           {{ createCategoryButtonName }}
         </el-button>
       </el-form-item>
@@ -73,7 +74,7 @@
       </el-form-item>
       <el-form-item label="Date">
         <el-date-picker
-          v-model="dateFromForm"
+          v-model="formDate"
           type="datetimerange"
           range-separator="au"
           start-placeholder="Début"
@@ -85,33 +86,29 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Annuler</el-button>
-        <el-button type="primary" @click="createActivity">Valider</el-button>
+        <el-button type="primary" @click="updateEvent">Valider</el-button>
       </div>
     </template>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from '@/store/activity.store';
 import { ref, reactive, computed } from 'vue';
-import { CirclePlusFilled } from '@element-plus/icons-vue';
-import { TypeRoomSchema } from '@/interfaces/activity.interface';
+import { Edit } from '@element-plus/icons-vue';
+import { useActivityStore } from '@/store/activity.store';
 
+import {
+  TypeRoomSchema,
+  type ActivityResponse,
+} from '@/interfaces/activity.interface';
+
+const props = defineProps<{ activity: ActivityResponse }>();
 const activityStore = useActivityStore();
 const createCategorySwitch = ref(false);
-const dateFromForm = ref();
 const dialogFormVisible = ref(false);
-let form = reactive({
-  title: '',
-  description: '',
-  roomName: '',
-  speaker: '',
-  typeRoom: '',
-  category: '',
-  ticketMax: 0,
-  start: Date,
-  end: Date,
-});
+const formDate = ref();
+const newCategory = ref('');
+const form = reactive({} as ActivityResponse);
 
 const typeRoom = TypeRoomSchema.options.map(item => {
   return { label: item, value: item };
@@ -123,30 +120,21 @@ const createCategoryButtonName = computed(() => {
     : 'Créer une categorie';
 });
 
-async function createActivity() {
-  form.start = dateFromForm.value[0];
-  form.end = dateFromForm.value[1];
-  await activityStore.createActivity(form);
-
-  dialogFormVisible.value = false;
-  dateFromForm.value = [];
-  createCategorySwitch.value = false;
-  form = {
-    title: '',
-    description: '',
-    roomName: '',
-    speaker: '',
-    typeRoom: '',
-    category: '',
-    ticketMax: 0,
-    start: Date,
-    end: Date,
-  };
+function editEvent() {
+  Object.assign(form, props.activity);
+  // note: care about category
+  form.category = form.category[0]?.name;
+  formDate.value = [form.start, form.end];
+  dialogFormVisible.value = true;
 }
 
-function switchCategory() {
-  form.category = '';
-  createCategorySwitch.value = !createCategorySwitch.value;
+async function updateEvent() {
+  if (form) {
+    form.start = formDate.value[0];
+    form.end = formDate.value[1];
+  }
+  await activityStore.updateActivity(form);
+  dialogFormVisible.value = false;
 }
 </script>
 

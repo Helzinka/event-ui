@@ -22,7 +22,7 @@
     <div>{{ event.description }}</div>
     <div class="mt-4 flex justify-end">
       <el-button-group>
-        <el-button :icon="View" @click="goToActivity" />
+        <el-button :icon="View" @click="goToActivities" />
         <EventButtonUpdate :event />
         <el-popconfirm
           width="300"
@@ -31,7 +31,7 @@
           :icon="InfoFilled"
           icon-color="#626AEF"
           title="Etes vous sur de vouloir supprimer cette évènement "
-          @confirm="deleteEvent"
+          @confirm="eventStore.deleteEvent({ id: props.event.id })"
         >
           <template #reference>
             <el-button :icon="Delete" />
@@ -43,16 +43,17 @@
 </template>
 
 <script setup lang="ts">
+import type { EventResponse } from '@/interfaces/event.interface';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import type { Event } from '@/interfaces/event.interface';
 import { ArrowRight, Delete, View, InfoFilled } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
 import { useEventStore } from '@/store/event.store';
+import { useActivityStore } from '@/store/activity.store';
 
-const props = defineProps<{ event: Event }>();
+const props = defineProps<{ event: EventResponse }>();
 const eventStore = useEventStore();
-
+const activityStore = useActivityStore();
 const router = useRouter();
 
 const status = computed(() => {
@@ -63,11 +64,12 @@ const status = computed(() => {
   else return { content: 'A venir', color: 'warning' };
 });
 
-async function goToActivity() {
-  await router.push({ name: 'eventByid', params: { eventId: props.event.id } });
-}
-
-async function deleteEvent() {
-  await eventStore.deleteEvent({ where: { id: props.event.id } });
+async function goToActivities() {
+  await router.push({
+    name: 'acitiviesByEvent',
+    params: { eventTitle: props.event.title },
+  });
+  // note: make sur event is not ref
+  activityStore.setCurrentEvent(props.event);
 }
 </script>

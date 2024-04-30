@@ -1,9 +1,5 @@
 <template>
-  <el-table
-    :data="parameterStore.users"
-    style="width: 100%"
-    table-layout="auto"
-  >
+  <el-table :data="parameterStore.users" style="width: 100%">
     <el-table-column
       v-for="(item, i) in parameterStore.getColumns"
       :prop="item"
@@ -48,7 +44,12 @@
             parameterStore.edit && parameterStore.editingUser.id == scope.row.id
           "
         >
-          <el-button link type="primary" size="small" @click="saveUser()">
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="parameterStore.saveUser"
+          >
             sauvegarder
           </el-button>
           <el-button
@@ -65,7 +66,7 @@
             link
             type="primary"
             size="small"
-            @click="editUser(scope.row.id)"
+            @click="parameterStore.editUser(scope.row.id)"
           >
             editer
           </el-button>
@@ -76,7 +77,7 @@
             :icon="InfoFilled"
             icon-color="#626AEF"
             title="Etes vous sur de vouloir supprimer cette utilisateur "
-            @confirm="deleteUser(scope.row.id)"
+            @confirm="parameterStore.deleteUser({ id: scope.row.id })"
           >
             <template #reference>
               <el-button link type="danger" size="small">supprimer</el-button>
@@ -86,7 +87,7 @@
       </template>
     </el-table-column>
   </el-table>
-  <CreateUser />
+  <UserButtonCreate />
 </template>
 
 <script setup lang="ts">
@@ -97,31 +98,11 @@ import { RoleSchema } from '@/interfaces/prisma.interface';
 
 const parameterStore = useUserManagerStore();
 
-onMounted(() =>
-  parameterStore.findUsers({
-    where: {
-      role: {
-        notIn: ['GUEST', 'USER'],
-      },
-    },
-  })
-);
+onMounted(() => parameterStore.find());
 
 const selectOptions = RoleSchema.options.map(item => {
   return { label: item, value: item };
 });
-
-async function deleteUser(id: number) {
-  await parameterStore.deleteUser({ where: { id } });
-}
-
-async function saveUser() {
-  await parameterStore.saveUser();
-}
-
-function editUser(id: number) {
-  parameterStore.editUser(id);
-}
 </script>
 
 <style>

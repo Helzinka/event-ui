@@ -1,11 +1,8 @@
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
-
 import { ElNotification } from 'element-plus';
-
 import type { User } from '@/interfaces/login.interface';
-
-import * as client from '@/service/login.service';
+import * as service from '@/service/login.service';
 
 const loginState = {
   isConnected: false,
@@ -29,7 +26,7 @@ export const useLoginStore = defineStore('login', {
   actions: {
     async connect(email: string, password: string) {
       const router = useRouter();
-      const data = await client.connect(email, password);
+      const data = await service.connect(email, password);
       if (data.message) {
         this.error.message = data.message;
         this.isConnected = false;
@@ -48,7 +45,7 @@ export const useLoginStore = defineStore('login', {
     async autoConnect() {
       const email = import.meta.env.VITE_ADMIN_EMAIL;
       const password = import.meta.env.VITE_ADMIN_PASSWORD;
-      const data = await client.connect(email, password);
+      const data = await service.connect(email, password);
       this.isConnected = true;
       this.user = data;
     },

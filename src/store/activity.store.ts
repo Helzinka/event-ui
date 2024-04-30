@@ -1,30 +1,16 @@
 import { defineStore } from 'pinia';
-
 import { ElMessage } from 'element-plus';
+import * as service from '@/service/activity.service';
+import * as clientCategory from '@/service/category.service';
+import type { CategoriesFindArg } from '@/interfaces/category.interfaces';
+import type { ActivityDeleteArg } from '@/interfaces/activity.interface';
 
-import type {
-  ActityFind,
-  Activies,
-  ActityCreate,
-} from '@/interfaces/activity.interface';
-import type { Event } from '@/interfaces/event.interface';
-
-import * as client from '@/service/activity.service';
-
-interface ActivityState {
-  event: Event;
-  activies: Activies;
-  loading: {
-    activies: boolean;
-  };
-}
-
-const activityState: ActivityState = {
-  event: {},
-  activies: [],
-  loading: {
-    activies: false,
-  },
+const activityState = {
+  activies: [] as any[],
+  categories: [] as string[],
+  currentEvent: {} as any,
+  loading: false,
+  error: '',
 };
 
 /** Event Store */
@@ -36,43 +22,60 @@ export const useActivityStore = defineStore('activity', {
     },
     filterActivityByName: state => {
       return (title: string) =>
-        state.activies.filter(item => item.title?.includes(title));
+        state.activies.filter((item: any) => item.title?.includes(title));
     },
     showCategories: state => {
-      // bug: replace with categories from bdd
-      const categories: string[] = [];
-
-      for (const item of state.activies) {
-        if (item.category) {
-          for (const item2 of item.category) {
-            if (item2.name && categories.length <= 0 && item2.name) {
-              categories.push(item2.name);
-            }
-            if (item2.name && !categories.includes(item2.name)) {
-              categories.push(item2.name);
-            }
-          }
-        }
-      }
-      return categories;
+      return state.categories;
     },
   },
   actions: {
-    async findActivitiesFromEvent(option: ActityFind) {
-      const { activity, ...event } =
-        await client.findActivitiesFromEvent(option);
-      this.activies = activity;
-      this.event = event;
+    async findActivities(option: any) {
+      const activies = await service.findActivities(option);
+      this.activies = activies;
     },
-    async createActivity(option: ActityCreate) {
-      const data = await client.createActivity(option);
+    async findCategories(option: CategoriesFindArg) {
+      const categories = await clientCategory.findCategories(option);
+      if (categories.length)
+        this.categories = categories.map(item => item.name);
+    },
+    async createActivity(option: any) {
+      option.eventId = this.currentEvent.id;
+      const data = await service.createActivity(option);
       if (data) {
         this.activies.push(data);
+        this.findCategories({ eventTitle: this.currentEvent.title });
         ElMessage({
           message: `Evènement ${data.title} bien créé`,
           type: 'success',
         });
       }
+    },
+    async deleteActivity(option: ActivityDeleteArg) {
+      const data = await service.deleteActivity(option);
+      if (data) {
+        this.activies = this.activies.filter(
+          activity => activity.id !== data.id
+        );
+        ElMessage({
+          message: `L'activitée ${data.title} a bien été supprimé`,
+          type: 'success',
+        });
+      }
+    },
+    async updateActivity(option: any) {
+      const data = await service.updateActivity(option);
+      if (data) {
+        this.activies = this.activies.map(activity =>
+          activity.id === data.id ? data : activity
+        );
+        ElMessage({
+          message: `L'activitée ${data.title} a bien été modifié`,
+          type: 'success',
+        });
+      }
+    },
+    setCurrentEvent(event: any) {
+      this.currentEvent = event;
     },
   },
 });
