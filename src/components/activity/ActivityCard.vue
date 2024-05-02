@@ -27,7 +27,10 @@
     </template>
     <div>{{ activity.description }}</div>
     <div class="mt-4 flex items-center justify-between">
-      <span class="text-gray-400">{{ ticketStatus }}</span>
+      <div class="flex gap-2">
+        <span class="text-gray-400">{{ ticketStatus }}</span>
+        <span class="text-gray-400">salle {{ activity.roomName }}</span>
+      </div>
       <el-button-group>
         <el-button :icon="View" @click="goToActivity" />
         <ActivityButtonUpdate :activity />

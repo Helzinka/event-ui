@@ -47,6 +47,9 @@ const router = createRouter({
             {
               text: eventTitle,
             },
+            {
+              text: 'Activitées',
+            },
           ];
         },
       },
@@ -100,7 +103,9 @@ router.beforeEach(async (to, from, next) => {
   const loginStore = useLoginStore();
   if (!loginStore.showIsConnected) {
     await loginStore.autoConnect();
-    next('/event/gadzooks/activities');
+    next(
+      'event/jubilantly/activity/curtus%20custodia%20sponte%20administratio%20asperiores'
+    );
   } else next();
 });
 
