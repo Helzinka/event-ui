@@ -98,7 +98,7 @@ import { RoleSchema } from '@/interfaces/prisma.interface';
 
 const parameterStore = useUserManagerStore();
 
-onMounted(() => parameterStore.find());
+onMounted(() => parameterStore.findUsers());
 
 const selectOptions = RoleSchema.options.map(item => {
   return { label: item, value: item };

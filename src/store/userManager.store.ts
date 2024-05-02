@@ -10,7 +10,6 @@ const parameterState = {
   editingUser: {} as any,
 };
 
-/** Parameter Store */
 export const useUserManagerStore = defineStore('userManager', {
   state: () => parameterState,
   getters: {
@@ -23,7 +22,7 @@ export const useUserManagerStore = defineStore('userManager', {
     },
   },
   actions: {
-    async find() {
+    async findUsers() {
       this.users = await service.findUsers({ role: ['MANAGER', 'ADMIN'] });
     },
     async deleteUser(options: any) {

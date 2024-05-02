@@ -10,7 +10,7 @@
   </div>
   <el-row :gutter="20">
     <el-col
-      v-for="activity in activityStore.filterActivityByName(search)"
+      v-for="activity in activitiesStore.filterActivityByName(search)"
       :key="activity.id"
       class="mb-4"
       :span="12"
@@ -21,23 +21,24 @@
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from '@/store/activity.store';
+import { useActivitiesStore } from '@/store/activities.store';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const activityStore = useActivityStore();
+const activitiesStore = useActivitiesStore();
 const search = ref('');
 
 onMounted(async () => {
-  activityStore.setCurrentEvent(route.params.eventTitle as string);
-  await activityStore.findActivities({
+  activitiesStore.setCurrentEvent(route.params.eventTitle as string);
+  await activitiesStore.findActivities({
     eventTitle: route.params.eventTitle as string,
   });
-  await activityStore.findCategories({
+  await activitiesStore.findCategories({
     eventTitle: route.params.eventTitle as string,
   });
 });
 </script>
 
 <style scoped></style>
+@/store/activities.store

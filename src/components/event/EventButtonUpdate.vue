@@ -44,10 +44,10 @@
 import { ref, reactive } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import type { EventResponse } from '@/interfaces/event.interface';
-import { useEventStore } from '@/store/event.store';
+import { useEventsStore } from '@/store/events.store';
 
 const props = defineProps<{ event: EventResponse }>();
-const eventStore = useEventStore();
+const eventStore = useEventsStore();
 let dialogFormVisible = ref(false);
 let formDate = ref();
 let form = reactive({} as EventResponse);
@@ -69,3 +69,4 @@ async function updateEvent() {
 </script>
 
 <style scoped></style>
+@/store/events.store

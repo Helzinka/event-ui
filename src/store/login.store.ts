@@ -4,7 +4,7 @@ import { ElNotification } from 'element-plus';
 import type { User } from '@/interfaces/login.interface';
 import * as service from '@/service/login.service';
 
-const loginState = {
+const state = {
   isConnected: false,
   user: {} as User,
   error: {
@@ -12,9 +12,8 @@ const loginState = {
   },
 };
 
-/** login Store */
-export const useLoginStore = defineStore('login', {
-  state: () => loginState,
+export const useLoginStore = defineStore('Login', {
+  state: () => state,
   getters: {
     showName: state => {
       return state.user.name;

@@ -92,12 +92,12 @@
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from '@/store/activity.store';
+import { useActivitiesStore } from '@/store/activities.store';
 import { ref, reactive, computed } from 'vue';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import { TypeRoomSchema } from '@/interfaces/activity.interface';
 
-const activityStore = useActivityStore();
+const activityStore = useActivitiesStore();
 const createCategorySwitch = ref(false);
 const dateFromForm = ref();
 const dialogFormVisible = ref(false);
@@ -151,3 +151,4 @@ function switchCategory() {
 </script>
 
 <style scoped></style>
+@/store/activities.store

@@ -41,7 +41,7 @@
           :icon="InfoFilled"
           icon-color="#626AEF"
           title="Etes vous sur de vouloir supprimer cette activitée "
-          @confirm="activityStore.deleteActivity({ id: activity.id })"
+          @confirm="activitiesStore.deleteActivity({ id: activity.id })"
         >
           <template #reference>
             <el-button :icon="Delete" />
@@ -58,10 +58,12 @@ import { computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ArrowRight, View, Delete, InfoFilled } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
+import { useActivitiesStore } from '@/store/activities.store';
 import { useActivityStore } from '@/store/activity.store';
 
 const router = useRouter();
 const route = useRoute();
+const activitiesStore = useActivitiesStore();
 const activityStore = useActivityStore();
 const props = defineProps<{ activity: ActivityResponse }>();
 
@@ -74,7 +76,7 @@ const status = computed(() => {
   } else if (dayjs().isAfter(props.activity.end)) {
     return { content: 'Finis', color: 'danger' };
   } else return { content: 'A venir', color: 'warning' };
-});
+}) as any;
 
 const ticketStatus = computed(() => {
   return `${props.activity.ticketBuy}/${props.activity.ticketMax}`;
@@ -88,5 +90,7 @@ async function goToActivity() {
       activityTitle: props.activity.title,
     },
   });
+  activityStore.setCurrentActivity(props.activity);
 }
 </script>
+@/store/activities.store

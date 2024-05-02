@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { useEventStore } from '@/store/event.store';
+import { useEventsStore } from '@/store/events.store';
 import { ref, reactive } from 'vue';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import type { UploadInstance } from 'element-plus';
@@ -89,7 +89,7 @@ import type { FormInstance, FormRules } from 'element-plus';
 import type { FileResponse } from '@/interfaces/event.interface';
 
 const requestURL = 'http://localhost:3000/api/event/valideGuestList';
-const eventStore = useEventStore();
+const eventStore = useEventsStore();
 const uploadFile = ref();
 const dialogFormVisible = ref(false);
 const upload = ref<UploadInstance>();
@@ -170,3 +170,4 @@ async function createEvent() {
 </script>
 
 <style scoped></style>
+@/store/events.store

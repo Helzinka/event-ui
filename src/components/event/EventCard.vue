@@ -48,12 +48,12 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowRight, Delete, View, InfoFilled } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
-import { useEventStore } from '@/store/event.store';
-import { useActivityStore } from '@/store/activity.store';
+import { useEventsStore } from '@/store/events.store';
+import { useActivitiesStore } from '@/store/activities.store';
 
 const props = defineProps<{ event: EventResponse }>();
-const eventStore = useEventStore();
-const activityStore = useActivityStore();
+const eventStore = useEventsStore();
+const activityStore = useActivitiesStore();
 const router = useRouter();
 
 const status = computed(() => {
@@ -62,7 +62,7 @@ const status = computed(() => {
   else if (dayjs().isAfter(props.event.end))
     return { content: 'Finis', color: 'danger' };
   else return { content: 'A venir', color: 'warning' };
-});
+}) as any;
 
 async function goToActivities() {
   await router.push({
@@ -73,3 +73,4 @@ async function goToActivities() {
   activityStore.setCurrentEvent(props.event);
 }
 </script>
+@/store/activities.store @/store/events.store

@@ -4,6 +4,7 @@
       {{ item.text }}
     </el-breadcrumb-item>
   </el-breadcrumb>
+  <el-divider />
 </template>
 
 <script setup lang="ts">

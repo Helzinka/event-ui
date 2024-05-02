@@ -3,13 +3,12 @@ import dayjs from 'dayjs';
 import type { EventsResponse } from '@/interfaces/event.interface';
 import * as service from '@/service/event.service';
 
-const reportingState = {
+const state = {
   events: [] as EventsResponse,
 };
 
-/** Reporting Store */
-export const useReportingStore = defineStore('reporting', {
-  state: () => reportingState,
+export const useReportingStore = defineStore('Reporting', {
+  state: () => state,
   // todo: make call to db instead of get all events
   getters: {
     showNumberEvents: state => {

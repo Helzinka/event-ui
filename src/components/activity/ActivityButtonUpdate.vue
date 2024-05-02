@@ -95,7 +95,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
-import { useActivityStore } from '@/store/activity.store';
+import { useActivitiesStore } from '@/store/activities.store';
 
 import {
   TypeRoomSchema,
@@ -103,7 +103,7 @@ import {
 } from '@/interfaces/activity.interface';
 
 const props = defineProps<{ activity: ActivityResponse }>();
-const activityStore = useActivityStore();
+const activityStore = useActivitiesStore();
 const createCategorySwitch = ref(false);
 const dialogFormVisible = ref(false);
 const formDate = ref();
@@ -122,8 +122,8 @@ const createCategoryButtonName = computed(() => {
 
 function editEvent() {
   Object.assign(form, props.activity);
-  // note: care about category
-  form.category = form.category[0]?.name;
+  // note: care about type and data
+  form.category = form.category?.shift()?.name as any;
   formDate.value = [form.start, form.end];
   dialogFormVisible.value = true;
 }
@@ -139,3 +139,4 @@ async function updateEvent() {
 </script>
 
 <style scoped></style>
+@/store/activities.store

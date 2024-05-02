@@ -2,12 +2,11 @@ import { defineStore } from 'pinia';
 import { ElMessage } from 'element-plus';
 import type {
   EventsResponse,
-  EventResponse,
   EventCreateArg,
 } from '@/interfaces/event.interface';
 import * as service from '@/service/event.service';
 
-const eventState = {
+const state = {
   events: [] as EventsResponse,
   loading: {
     event: false,
@@ -17,19 +16,13 @@ const eventState = {
   },
 };
 
-/** Event Store */
-export const useEventStore = defineStore('event', {
-  state: () => eventState,
+export const useEventsStore = defineStore('Events', {
+  state: () => state,
   getters: {
-    showEvents: state => {
+    getEvents: state => {
       return state.events;
     },
-    showEventById: state => {
-      return (id: number) => {
-        return state.events.find(item => item.id === id) as EventResponse;
-      };
-    },
-    showEventByName: state => {
+    filterEventsByName: state => {
       return (title: string) => {
         return state.events.filter(item => item.title?.includes(title));
       };

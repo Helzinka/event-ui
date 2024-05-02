@@ -1,5 +1,5 @@
 import ActivityView from '@/views/ActivityView.vue';
-import EventView from '@/views/EventView.vue';
+import Activities from '@/views/ActivitiesView.vue';
 import EventsView from '@/views/EventsView.vue';
 import LoginView from '@/views/LoginView.vue';
 import NotFound from '@/views/NotFoundView.vue';
@@ -31,7 +31,7 @@ const router = createRouter({
     {
       path: '/event/:eventTitle/activities',
       name: 'acitiviesByEvent',
-      component: EventView,
+      component: Activities,
       meta: {
         test(route: any) {
           console.log('test', route);
@@ -103,9 +103,7 @@ router.beforeEach(async (to, from, next) => {
   const loginStore = useLoginStore();
   if (!loginStore.showIsConnected) {
     await loginStore.autoConnect();
-    next(
-      'event/jubilantly/activity/curtus%20custodia%20sponte%20administratio%20asperiores'
-    );
+    next('event/concerning/activities');
   } else next();
 });
 
