@@ -2,6 +2,7 @@
 
 - refaire le retour d'un user , only token + jwt reveal
 - format les message d'erreur en français depuis le back : login
+- refaire les store (selection projet etc)
 
 ## TS
 

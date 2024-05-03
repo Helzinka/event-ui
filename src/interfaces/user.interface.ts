@@ -1,4 +1,4 @@
-import { number, z } from 'zod';
+import { z } from 'zod';
 
 export const RoleSchema = z.enum(['USER', 'MANAGER', 'ADMIN', 'GUEST']);
 export const Signin = z.object({

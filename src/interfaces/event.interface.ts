@@ -1,5 +1,5 @@
-import { UserGuestCreateArg } from '@modules/user/user.schema';
-import { any, string, z } from 'zod';
+import { UserGuestCreateArg } from '@/interfaces/user.interface';
+import { any, z } from 'zod';
 
 export const EventCreateArg = z.object({
   title: z.string({

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CategoriesResponse, CategoryResponse } from './category.interfaces';
+import { CategoriesResponse } from './category.interfaces';
 
 export const TypeRoomSchema = z.enum(['PLENIERE', 'NORMAL']);
 export const ActivityCreateArg = z.object({

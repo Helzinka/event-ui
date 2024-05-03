@@ -1,4 +1,3 @@
-import { pa } from 'element-plus/es/locales.mjs';
 import { instanceAxios } from './index';
 
 import type {

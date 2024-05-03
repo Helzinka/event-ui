@@ -1,5 +1,4 @@
 import { instanceAxios } from './index';
-
 import type {
   ActivityFindOneArg,
   ActivityCreateArg,

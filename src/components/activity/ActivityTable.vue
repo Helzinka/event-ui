@@ -2,6 +2,7 @@
   <el-descriptions
     :title="'Activitée : ' + activityStore.currentActivity.title"
   >
+    <!-- meta data -->
     <el-descriptions-item label="Début">
       {{ dayjs(activityStore.currentActivity.start).format('DD/MM/YYYY') }}
     </el-descriptions-item>
@@ -11,13 +12,14 @@
     <el-descriptions-item label="Status">
       <el-tag size="small" :type="status.color">{{ status.content }}</el-tag>
     </el-descriptions-item>
+    <!-- tickets -->
     <el-descriptions-item label="Tickets achetés">
       {{ ticketsSold.number }} ({{ ticketsSold.percent }})
     </el-descriptions-item>
     <el-descriptions-item label="Tickets utilisés">
       {{ scanTickets.number }} ({{ scanTickets.percent }})
     </el-descriptions-item>
-    <el-descriptions-item label="Tickets en attente">
+    <el-descriptions-item label="Tickets non utilisés">
       {{ ticketsPending.number }} ({{ ticketsPending.percent }})
     </el-descriptions-item>
   </el-descriptions>
@@ -74,9 +76,7 @@ const status = computed(() => {
 </script>
 
 <style>
-/* use var css instead */
 .ep-table .cell {
   padding: 0px;
 }
 </style>
-@/store/activities.store

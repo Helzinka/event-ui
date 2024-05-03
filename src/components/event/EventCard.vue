@@ -69,7 +69,6 @@ async function goToActivities() {
     name: 'acitiviesByEvent',
     params: { eventTitle: props.event.title },
   });
-  // note: make sur event is not ref
   activityStore.setCurrentEvent(props.event);
 }
 </script>
