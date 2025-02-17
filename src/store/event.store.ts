@@ -2,21 +2,21 @@ import { defineStore } from 'pinia';
 import { ElMessage } from 'element-plus';
 import type {
   EventsResponse,
+  EventResponse,
   EventCreateArg,
 } from '@/interfaces/event.interface';
 import * as service from '@/service/event.service';
+import { useActivityStore } from './activity.store';
+import type { ActivitiesResponse } from '@/interfaces/activity.interface';
 
 const state = {
   events: [] as EventsResponse,
-  loading: {
-    event: false,
-  },
-  error: {
-    message: '',
-  },
+  event: {} as EventResponse,
+  loading: false,
+  error: '',
 };
 
-export const useEventsStore = defineStore('Events', {
+export const useEventStore = defineStore('Event', {
   state: () => state,
   getters: {
     getEvents: state => {
@@ -30,14 +30,24 @@ export const useEventsStore = defineStore('Events', {
   },
   actions: {
     async findEvents() {
-      this.loading.event = true;
+      this.loading = true;
       const events = await service.findEvents();
       if (events.length > 0) {
         this.events = events;
       } else {
-        this.error.message = 'No events found';
+        this.error = 'No events found';
       }
-      this.loading.event = false;
+      this.loading = false;
+    },
+    async findOneEvent(id: string) {
+      this.loading = true;
+      const event = await service.findOneEvent({ id });
+      if (event) {
+        this.event = event;
+      } else {
+        this.error = 'No event found';
+      }
+      this.loading = false;
     },
     async createEvent(options: EventCreateArg) {
       const data = await service.createEvent(options);

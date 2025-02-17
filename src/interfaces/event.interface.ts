@@ -1,5 +1,6 @@
 import { UserGuestCreateArg } from '@/interfaces/user.interface';
 import { any, z } from 'zod';
+import { ActivitiesResponse } from './activity.interface';
 
 export const EventCreateArg = z.object({
   title: z.string({
@@ -46,11 +47,12 @@ export const EventResponse = z.object({
   private: z.boolean(),
   guestId: z.union([z.number().int(), z.null()]),
   guest: z.object({}).optional(),
+  activity: ActivitiesResponse.optional(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
 export const EventFindOneArg = z.object({
-  id: z.string().transform(Number).optional(),
+  id: z.string().optional(),
   title: z.string().optional(),
 });
 export const EventsResponse = z.array(EventResponse);

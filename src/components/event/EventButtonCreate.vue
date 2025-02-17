@@ -31,7 +31,7 @@
       </el-form-item>
       <el-form-item label="Date" prop="rangeDate">
         <el-date-picker
-          v-model="form.rangeDate"
+          v-model="form.rangeDate as any"
           type="datetimerange"
           range-separator="au"
           start-placeholder="Début"
@@ -53,7 +53,7 @@
             }
           "
           :on-success="
-            (data: FileResponse) => {
+            (data: any) => {
               responseData = data.data;
             }
           "
@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { useEventsStore } from '@/store/events.store';
+import { useEventStore } from '@/store/event.store';
 import { ref, reactive } from 'vue';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import type { UploadInstance } from 'element-plus';
@@ -89,7 +89,7 @@ import type { FormInstance, FormRules } from 'element-plus';
 import type { FileResponse } from '@/interfaces/event.interface';
 
 const requestURL = 'http://localhost:3000/api/event/valideGuestList';
-const eventStore = useEventsStore();
+const eventStore = useEventStore();
 const uploadFile = ref();
 const dialogFormVisible = ref(false);
 const upload = ref<UploadInstance>();
@@ -170,4 +170,4 @@ async function createEvent() {
 </script>
 
 <style scoped></style>
-@/store/events.store
+@/store/events.store @/store/event.store

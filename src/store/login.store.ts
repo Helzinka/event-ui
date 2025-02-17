@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import { ElNotification } from 'element-plus';
-import type { User } from '@/interfaces/login.interface';
+import type { UserResponse } from '@/interfaces/user.interface';
 import * as service from '@/service/login.service';
 
 const state = {
   isConnected: false,
-  user: {} as User,
+  user: {} as UserResponse,
   error: {
     message: '',
   },

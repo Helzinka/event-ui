@@ -5,7 +5,7 @@ import LoginView from '@/views/LoginView.vue';
 import NotFound from '@/views/NotFoundView.vue';
 import ParameterView from '@/views/ParameterView.vue';
 import ReportingView from '@/views/ReportingView.vue';
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, useRouter } from 'vue-router';
 import { useLoginStore } from './store/login.store';
 
 const router = createRouter({
@@ -29,55 +29,48 @@ const router = createRouter({
       },
     },
     {
-      path: '/event/:eventTitle/activities',
+      path: '/event/:eventId',
       name: 'acitiviesByEvent',
       component: Activities,
       meta: {
-        test(route: any) {
-          console.log('test', route);
-          return ['test'];
-        },
         breadCrumb(route: any) {
-          const eventTitle = route.params.eventTitle;
+          const eventId = route.params.eventId;
           return [
             {
               text: 'Evénement',
               to: { name: 'events' },
             },
             {
-              text: eventTitle,
-            },
-            {
-              text: 'Activitées',
+              text: eventId,
             },
           ];
         },
       },
     },
     {
-      path: '/event/:eventTitle/activity/:activityTitle',
+      path: '/event/:eventId/activity/:activityId',
       name: 'activityById',
       component: ActivityView,
       meta: {
         breadCrumb(route: any) {
-          const eventTitle = route.params.eventTitle;
-          const activityTitle = route.params.activityTitle;
+          const eventId = route.params.eventId;
+          const activityId = route.params.activityId;
           return [
             {
               text: 'Evénement',
               to: { name: 'events' },
             },
             {
-              text: eventTitle,
+              text: eventId,
               to: {
                 name: 'acitiviesByEvent',
                 params: {
-                  eventTitle: eventTitle,
+                  eventId: eventId,
                 },
               },
             },
             {
-              text: activityTitle,
+              text: activityId,
             },
           ];
         },
@@ -100,10 +93,14 @@ const router = createRouter({
 // route guard global
 // to force a specifque path
 router.beforeEach(async (to, from, next) => {
+  const router = useRouter();
   const loginStore = useLoginStore();
   if (!loginStore.showIsConnected) {
     await loginStore.autoConnect();
-    next('event/concerning/activities');
+    router.push({
+      name: 'events',
+    });
+    next();
   } else next();
 });
 

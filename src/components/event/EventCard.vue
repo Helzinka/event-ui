@@ -22,7 +22,7 @@
     <div>{{ event.description }}</div>
     <div class="mt-4 flex justify-end">
       <el-button-group>
-        <el-button :icon="View" @click="goToActivities" />
+        <el-button :icon="View" @click="acitiviesByEvent" />
         <EventButtonUpdate :event />
         <el-popconfirm
           width="300"
@@ -48,12 +48,12 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowRight, Delete, View, InfoFilled } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
-import { useEventsStore } from '@/store/events.store';
-import { useActivitiesStore } from '@/store/activities.store';
+import { useEventStore } from '@/store/event.store';
+import { useSelectorStore } from '@/store/selector.store';
 
 const props = defineProps<{ event: EventResponse }>();
-const eventStore = useEventsStore();
-const activityStore = useActivitiesStore();
+const eventStore = useEventStore();
+const selectorStore = useSelectorStore();
 const router = useRouter();
 
 const status = computed(() => {
@@ -64,12 +64,13 @@ const status = computed(() => {
   else return { content: 'A venir', color: 'warning' };
 }) as any;
 
-async function goToActivities() {
+async function acitiviesByEvent() {
   await router.push({
     name: 'acitiviesByEvent',
-    params: { eventTitle: props.event.title },
+    params: { eventId: props.event.id },
   });
-  activityStore.setCurrentEvent(props.event);
+  //cache
+  selectorStore.setCurrentEvent(props.event);
 }
 </script>
-@/store/activities.store @/store/events.store
+@/store/event.store

@@ -146,12 +146,13 @@ export const ActivityUpdateArg = z.object({
 export const ActivitiesResponse = z.array(ActivityResponse);
 export const ActivityDeleteArg = z.object({ id: z.number().int() });
 export const ActivityFindOneArg = z.object({
-  eventTitle: z.string(),
+  eventId: z.string(),
   id: z.string().transform(Number).optional(),
-  title: z.string().optional(),
+  activityTitle: z.string().optional(),
 });
 export const ActivitiesFindArg = z.object({
-  eventTitle: z.string(),
+  eventId: z.string(),
+  eventTitle: z.string().optional(),
 });
 
 export type TypeRoom = z.infer<typeof TypeRoomSchema>;

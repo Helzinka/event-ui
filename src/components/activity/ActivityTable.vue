@@ -23,15 +23,27 @@
       {{ ticketsPending.number }} ({{ ticketsPending.percent }})
     </el-descriptions-item>
   </el-descriptions>
+  <!-- table -->
+  <el-table :data="tableData" border style="width: 100%">
+    <el-table-column prop="date" label="Date" width="180" />
+  </el-table>
+
   <!-- <UserButtonCreate /> -->
 </template>
 
 <script setup lang="ts">
 import { useActivityStore } from '@/store/activity.store';
-import dayjs from 'dayjs';
 import { computed } from 'vue';
+import dayjs from 'dayjs';
 
 const activityStore = useActivityStore();
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const onMounted = () => {
+  activityStore.findTickets({ activityId: route.params.activityTitle });
+};
 
 const ticketsSold = computed(() => {
   return {

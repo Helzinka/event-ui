@@ -59,12 +59,12 @@ import { useRouter, useRoute } from 'vue-router';
 import { ArrowRight, View, Delete, InfoFilled } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
 import { useActivitiesStore } from '@/store/activities.store';
-import { useActivityStore } from '@/store/activity.store';
+import { useSelectorStore } from '@/store/selector.store';
 
 const router = useRouter();
 const route = useRoute();
 const activitiesStore = useActivitiesStore();
-const activityStore = useActivityStore();
+const selectorStore = useSelectorStore();
 const props = defineProps<{ activity: ActivityResponse }>();
 
 const status = computed(() => {
@@ -86,11 +86,11 @@ async function goToActivity() {
   await router.push({
     name: 'activityById',
     params: {
-      eventTitle: route.params.eventTitle,
-      activityTitle: props.activity.title,
+      eventId: route.params.eventId,
+      activityId: props.activity.id,
     },
   });
-  activityStore.setCurrentActivity(props.activity);
+  //cache
+  selectorStore.setCurrentEvent(props.activity);
 }
 </script>
-@/store/activities.store

@@ -22,23 +22,21 @@
 
 <script setup lang="ts">
 import { useActivitiesStore } from '@/store/activities.store';
+import { useEventStore } from '@/store/event.store';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const activitiesStore = useActivitiesStore();
+const eventStore = useEventStore();
 const search = ref('');
 
 onMounted(async () => {
-  activitiesStore.setCurrentEvent(route.params.eventTitle as string);
-  await activitiesStore.findActivities({
-    eventTitle: route.params.eventTitle as string,
-  });
+  await eventStore.findOneEvent(route.params.eventId as string);
   await activitiesStore.findCategories({
-    eventTitle: route.params.eventTitle as string,
+    eventId: route.params.eventId as string,
   });
 });
 </script>
 
 <style scoped></style>
-@/store/activities.store

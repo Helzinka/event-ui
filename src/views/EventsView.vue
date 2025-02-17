@@ -9,11 +9,11 @@
     <EventButtonCreate />
   </div>
   <!-- card event -->
-  <el-row v-loading="eventsStore.loading.event" :gutter="20">
-    <div v-if="eventsStore.error.message">{{ eventsStore.error.message }}</div>
+  <el-row v-loading="eventStore.loading" :gutter="20">
+    <div v-if="eventStore.error">{{ eventStore.error }}</div>
     <el-col
       v-else
-      v-for="event in eventsStore.filterEventsByName(search)"
+      v-for="event in eventStore.filterEventsByName(search)"
       :key="event.id"
       class="mb-4"
       :span="12"
@@ -24,14 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import { useEventsStore } from '@/store/events.store';
+import { useEventStore } from '@/store/event.store';
 import { onMounted, ref } from 'vue';
 
-const eventsStore = useEventsStore();
+const eventStore = useEventStore();
 const search = ref('');
 
 onMounted(async () => {
-  await eventsStore.findEvents();
+  await eventStore.findEvents();
 });
 </script>
-@/store/events.store

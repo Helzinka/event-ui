@@ -7,7 +7,7 @@ export const CategoryResponse = z.object({
   updatedAt: z.coerce.date(),
 });
 export const CategoriesResponse = z.array(CategoryResponse);
-export const CategoriesFindArg = z.object({ eventTitle: z.string() });
+export const CategoriesFindArg = z.object({ eventId: z.string() });
 
 export type CategoryResponse = z.infer<typeof CategoryResponse>;
 export type CategoriesResponse = z.infer<typeof CategoriesResponse>;

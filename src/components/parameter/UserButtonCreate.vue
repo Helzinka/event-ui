@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { RoleSchema } from '@/interfaces/prisma.interface';
+import { RoleSchema } from '@/interfaces/user.interface';
 import { useUserManagerStore } from '@/store/userManager.store';
 import { ref } from 'vue';
 import { reactive } from 'vue';

@@ -4,6 +4,7 @@ import * as service from '@/service/activity.service';
 import * as clientCategory from '@/service/category.service';
 import type { CategoriesFindArg } from '@/interfaces/category.interfaces';
 import type {
+  ActivitiesFindArg,
   ActivityDeleteArg,
   ActivityResponse,
 } from '@/interfaces/activity.interface';
@@ -12,8 +13,6 @@ import type { EventResponse } from '@/interfaces/event.interface';
 const state = {
   activies: [] as any[],
   categories: [] as string[],
-  currentEvent: {} as EventResponse,
-  currentActivity: {} as ActivityResponse,
   loading: false,
   error: '',
 };
@@ -33,7 +32,7 @@ export const useActivitiesStore = defineStore('Activities', {
     },
   },
   actions: {
-    async findActivities(option: any) {
+    async findActivities(option: ActivitiesFindArg) {
       const activies = await service.findActivities(option);
       this.activies = activies;
     },
@@ -77,12 +76,6 @@ export const useActivitiesStore = defineStore('Activities', {
           type: 'success',
         });
       }
-    },
-    setCurrentEvent(event: any) {
-      this.currentEvent = event;
-    },
-    setCurrentActivity(activity: any) {
-      this.currentActivity = activity;
     },
   },
 });

@@ -94,7 +94,7 @@
 import { useUserManagerStore } from '@/store/userManager.store';
 import { onMounted } from 'vue';
 import { InfoFilled } from '@element-plus/icons-vue';
-import { RoleSchema } from '@/interfaces/prisma.interface';
+import { RoleSchema } from '@/interfaces/user.interface';
 
 const parameterStore = useUserManagerStore();
 
